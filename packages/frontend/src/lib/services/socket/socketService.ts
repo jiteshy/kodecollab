@@ -75,7 +75,7 @@ export class SocketService {
           sessionId: this.sessionId,
           username: this.username,
         },
-        reconnection: true,
+        reconnection: false,
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 5000,
@@ -195,6 +195,11 @@ export class SocketService {
     this.connectionState.lastSuccessfulConnection = new Date();
     this.connectionState.lastError = undefined;
 
+    // If we were reconnecting, show success notification
+    if (!this.connectionState.isInitialConnection) {
+      NotificationService.showReconnectionSuccess();
+    }
+
     if (this.connectionState.isInitialConnection) {
       if (!this.socket?.connected) {
         return;
@@ -269,6 +274,13 @@ export class SocketService {
     }
 
     const delay = this.calculateRetryDelay();
+    console.log(`Reconnection attempt ${this.connectionState.reconnectAttempts + 1} of ${this.errorRecoveryOptions.maxRetries} in ${delay}ms`);
+    
+    // Show reconnecting notification
+    NotificationService.showReconnecting(
+      this.connectionState.reconnectAttempts + 1,
+      this.errorRecoveryOptions.maxRetries
+    );
 
     this.reconnectTimeout = setTimeout(() => {
       this.connectionState.reconnectAttempts++;
@@ -292,8 +304,9 @@ export class SocketService {
       details: this.connectionState.lastError,
     };
 
+    NotificationService.showReconnectionFailed();
     this.onError(
-      'Failed to establish connection after multiple attempts. Please refresh the page.',
+      'Connection to server lost. Please check your internet connection and refresh the page.',
     );
     this.disconnect();
   }

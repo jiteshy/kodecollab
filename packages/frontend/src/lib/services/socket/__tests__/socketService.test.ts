@@ -36,6 +36,8 @@ describe('SocketService', () => {
     updateSelection: jest.fn(),
     resetUser: jest.fn(),
     onSessionFull: jest.fn(),
+    updateTypingStatus: jest.fn(),
+    removeTypingStatus: jest.fn(),
   };
 
   beforeEach(() => {
@@ -445,7 +447,7 @@ describe('SocketService', () => {
       mockHandler(error);
 
       expect(mockOnError).toHaveBeenCalledWith(
-        'Failed to establish connection after multiple attempts. Please refresh the page.',
+        'Connection to server lost. Please check your internet connection and refresh the page.',
       );
       expect(mockSocket.disconnect).toHaveBeenCalled();
     });

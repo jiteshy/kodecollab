@@ -6,6 +6,8 @@ jest.mock('sonner', () => ({
   toast: {
     success: jest.fn(),
     info: jest.fn(),
+    loading: jest.fn(),
+    error: jest.fn(),
   },
 }));
 
@@ -69,6 +71,45 @@ describe('NotificationService', () => {
       NotificationService.showUserLeft(username, currentUsername);
       
       expect(toast.info).toHaveBeenCalledWith(' left the session');
+    });
+  });
+
+  describe('Connection Status Notifications', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should show reconnecting notification with attempt count', () => {
+      NotificationService.showReconnecting(2, 5);
+      expect(toast.loading).toHaveBeenCalledWith(
+        'Connection lost. Reconnecting... (Attempt 2/5)',
+        {
+          id: 'reconnection-status',
+          duration: Infinity
+        }
+      );
+    });
+
+    it('should show reconnection failed notification', () => {
+      NotificationService.showReconnectionFailed();
+      expect(toast.error).toHaveBeenCalledWith(
+        'Connection lost. Please check your internet connection and refresh the page.',
+        {
+          id: 'reconnection-status',
+          duration: Infinity
+        }
+      );
+    });
+
+    it('should show reconnection success notification', () => {
+      NotificationService.showReconnectionSuccess();
+      expect(toast.success).toHaveBeenCalledWith(
+        'Connection restored!',
+        {
+          id: 'reconnection-status',
+          duration: 3000
+        }
+      );
     });
   });
 }); 
