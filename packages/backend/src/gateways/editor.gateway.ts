@@ -28,7 +28,7 @@ import { Injectable } from '@nestjs/common';
   },
   path: '/api/ws',
   serveClient: false,
-  transports: ['websocket', 'polling'],
+  transports: ['polling', 'websocket'],
   pingInterval: 10000,
   pingTimeout: 5000,
   cookie: false,
