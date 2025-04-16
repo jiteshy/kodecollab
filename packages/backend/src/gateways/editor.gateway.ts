@@ -433,4 +433,17 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return null;
     }
   }
+
+  afterInit(server: Server) {
+    console.log('WebSocket Gateway initialized');
+    
+    server.engine.on('connection_error', (err) => {
+      console.error('Connection error:', {
+        code: err.code,
+        message: err.message,
+        context: err.context,
+        headers: err.req ? err.req.headers : null
+      });
+    });
+  }
 }
