@@ -75,6 +75,7 @@ export class SocketService {
           sessionId: this.sessionId,
           username: this.username,
         },
+        reconnection: false,
         timeout: 20000,
         autoConnect: true,
         transports: ['websocket', 'polling'],
