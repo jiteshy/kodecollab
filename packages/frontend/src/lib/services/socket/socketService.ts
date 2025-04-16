@@ -83,18 +83,6 @@ export class SocketService {
       });
 
       this.socket = this.manager.socket('/');
-      // Add these debugging listeners
-      this.socket.on('connect_error', (error: Error) => {
-        console.error('Connection error:', error);
-      });
-      
-      this.socket.on('reconnect_attempt', (attemptNumber: number) => {
-        console.log('Attempting reconnection:', attemptNumber);
-      });
-      
-      this.socket.on('reconnect_failed', () => {
-        console.error('Failed to reconnect');
-      });
       this.setupEventListeners();
     } catch (error) {
       this.handleConnectionError(error instanceof Error ? error : new Error('Unknown error'));
