@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Redis } from 'ioredis';
 import { Session } from '@collabx/shared';
 
@@ -7,15 +7,67 @@ export class RedisService {
   private readonly redis: Redis;
   private readonly SESSION_PREFIX = 'session:';
   private readonly SESSION_TTL = 24 * 60 * 60; // 24 hours
+  private readonly logger = new Logger(RedisService.name);
 
   constructor() {
-    this.redis = new Redis({
-      host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT || '6379'),
+    const isProduction = process.env.NODE_ENV === 'production';
+    const redisPrefix = isProduction ? (process.env.REDIS_PREFIX || '') : '';
+    const host = redisPrefix + (process.env.REDIS_HOST || 'localhost');
+    const port = parseInt(process.env.REDIS_PORT || '6379');
+    
+    this.logger.log(`Connecting to Redis at ${host}:${port}${isProduction ? ' with TLS' : ''}`);
+    
+    const config: any = {
+      host: host,
+      port: port,
       password: process.env.REDIS_PASSWORD,
+      connectTimeout: 10000,
+      retryStrategy: (times) => {
+        const delay = Math.min(times * 200, 5000);
+        this.logger.log(`Redis connection attempt ${times} failed. Retrying in ${delay}ms`);
+        return delay;
+      }
+    };
+    
+    // Only use TLS in production
+    if (isProduction) {
+      config.tls = {};
+    }
+    
+    this.redis = new Redis(config);
+    
+    // Add event listeners for better troubleshooting
+    this.redis.on('connect', () => {
+      this.logger.log('Connected to Redis');
+    });
+    
+    this.redis.on('error', (err) => {
+      this.logger.error(`Redis connection error: ${err.message}`, err.stack);
     });
   }
 
+  // General-purpose Redis methods
+  async get(key: string): Promise<string | null> {
+    return this.redis.get(key);
+  }
+
+  async set(key: string, value: string, ttl?: number): Promise<void> {
+    if (ttl) {
+      await this.redis.set(key, value, 'EX', ttl);
+    } else {
+      await this.redis.set(key, value);
+    }
+  }
+
+  async del(key: string): Promise<void> {
+    await this.redis.del(key);
+  }
+
+  async ttl(key: string): Promise<number> {
+    return this.redis.ttl(key);
+  }
+
+  // Session-specific methods
   async getSession(sessionId: string): Promise<Session | null> {
     const data = await this.redis.get(`${this.SESSION_PREFIX}${sessionId}`);
     if (!data) return null;
