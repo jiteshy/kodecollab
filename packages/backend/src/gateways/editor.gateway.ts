@@ -31,7 +31,7 @@ import { Injectable } from '@nestjs/common';
   transports: ['polling', 'websocket'],
   pingInterval: 10000,
   pingTimeout: 5000,
-  cookie: false,
+  cookie: true,
   allowEIO3: true,
   namespace: '/',
   connectTimeout: 45000,
