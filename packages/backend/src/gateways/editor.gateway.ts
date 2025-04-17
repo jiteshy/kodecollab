@@ -193,6 +193,30 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   /**
+   * Updates the user's last activity timestamp to prevent inactivity cleanup
+   * @param client - The WebSocket client connection
+   */
+  private async updateUserActivity(client: Socket): Promise<void> {
+    try {
+      const sessionId = client.handshake.query.sessionId as string;
+      const userId = client.data.userId;
+      
+      if (sessionId && userId) {
+        const session = await this.sessionService.getOrCreateSession(sessionId);
+        const user = session.users.get(userId);
+        
+        if (user) {
+          user.lastActive = Date.now();
+          session.lastActive = Date.now();
+          await this.sessionService.updateUser(sessionId, userId, user);
+        }
+      }
+    } catch (error) {
+      console.error('Error updating user activity:', error);
+    }
+  }
+
+  /**
    * Handles editor content changes.
    * Broadcasts changes to all users in the session.
    * @param client - The WebSocket client connection
@@ -227,6 +251,7 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     try {
+      await this.updateUserActivity(client);
       await this.sessionService.updateSessionContent(sessionId, payload.content);
       const user = await this.getUserFromSocket(client);
       if (user) {
@@ -263,6 +288,7 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     try {
+      await this.updateUserActivity(client);
       await this.sessionService.updateSessionLanguage(sessionId, payload.language);
       const user = await this.getUserFromSocket(client);
       if (user) {
@@ -311,6 +337,7 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     try {
+      await this.updateUserActivity(client);
       const user = await this.getUserFromSocket(client);
       if (user) {
         client.to(sessionId).emit(MessageType.CURSOR_MOVE, {
@@ -346,6 +373,7 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     try {
+      await this.updateUserActivity(client);
       const user = await this.getUserFromSocket(client);
       if (user) {
         client.to(sessionId).emit(MessageType.SELECTION_CHANGE, {
@@ -403,6 +431,7 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     try {
+      await this.updateUserActivity(client);
       const user = await this.getUserFromSocket(client);
       if (user) {
         client.to(sessionId).emit(MessageType.TYPING_STATUS, {
