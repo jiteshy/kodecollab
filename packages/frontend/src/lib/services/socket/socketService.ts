@@ -322,6 +322,7 @@ export class SocketService {
 
     if (error.type === 'SESSION_FULL') {
       this.storeHandlers.onSessionFull();
+      return;
     } else if (error.type === 'DUPLICATE_USERNAME') {
       const message = 'Username is already taken. Please choose a different username.';
       this.onError(message);
