@@ -18,7 +18,7 @@ The backend package of CollabX, built with NestJS and TypeScript. Handles WebSoc
 - **WebSocket**: Socket.IO
 - **Database**: Redis
 - **Validation**: Custom validation service
-- **Rate Limiting**: Custom rate limiter with Redis
+- **Rate Limiting**: In-memory rate limiter with Redis alternative
 
 ## Project Structure
 
@@ -77,8 +77,31 @@ The server will be available at http://localhost:4000
 
 - `EditorGateway`: Main WebSocket gateway for editor functionality
 - `SessionService`: Manages collaborative sessions
-- `RateLimiter`: Handles request rate limiting
+- `RedisRateLimiter`: Redis-based rate limiter for distributed rate limiting
 - `ValidationService`: Validates incoming messages
+
+### Rate Limiting Architecture
+
+CollabX implements Redis-based rate limiting to protect against excessive requests and provide reliable service in clustered environments:
+
+1. **Redis-Based Rate Limiter**: The application uses a Redis-based implementation that:
+   - Stores rate limit counters in Redis
+   - Provides per-user/per-event rate limits
+   - Works reliably across multiple server instances
+   - Allows for customizable limits per event type
+   - Automatically cleans up when users disconnect
+
+2. **Configurable Rate Limits**:
+   - JOIN: 5 attempts per minute
+   - CONTENT_CHANGE: 10 events per second
+   - CURSOR_MOVE: 30 events per 100ms
+   - TYPING_STATUS: 5 events per second
+
+This implementation offers several advantages:
+- **Distributed State**: Rate limit state is shared across all instances
+- **Persistence**: Rate limit data persists even if a server restarts
+- **Resilience**: Graceful handling of Redis connection issues
+- **Performance**: Minimal impact on request latency
 
 ### WebSocket Events
 

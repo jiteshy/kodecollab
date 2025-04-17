@@ -6,6 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [ConfigModule],
   providers: [RedisService, SessionService],
-  exports: [SessionService],
+  exports: [SessionService, RedisService],
 })
 export class SessionModule {}

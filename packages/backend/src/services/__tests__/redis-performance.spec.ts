@@ -9,6 +9,8 @@ const mockRedis = {
   del: jest.fn(),
   keys: jest.fn().mockResolvedValue([]),
   expire: jest.fn(),
+  on: jest.fn(),
+  ttl: jest.fn(),
 };
 
 jest.mock('ioredis', () => {

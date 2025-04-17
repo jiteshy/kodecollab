@@ -9,10 +9,10 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { MessageType, User, ValidationService } from '@collabx/shared';
-import { RateLimiter } from '@collabx/shared';
 import { SessionService } from '../services/session.service';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { RedisRateLimiter } from '../rate-limit/redis-rate-limiter';
 
 /**
  * WebSocket gateway for handling real-time collaborative editing functionality.
@@ -41,20 +41,14 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  private rateLimiter: RateLimiter;
+  private rateLimiter: RedisRateLimiter;
 
   constructor(
     private configService: ConfigService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private redisRateLimiter: RedisRateLimiter
   ) {
-    this.rateLimiter = new RateLimiter();
-
-    // Initialize rate limits
-    this.rateLimiter.addLimit(MessageType.JOIN, {
-      windowMs: 60000, // 1 minute
-      max: 5, // 5 attempts per minute
-      message: 'Too many join attempts. Please try again later.',
-    });
+    this.rateLimiter = redisRateLimiter;
   }
 
   /**
@@ -120,6 +114,9 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
             users: updatedUsers
           });
         }
+        
+        // Clear rate limits for this user
+        await this.rateLimiter.clear(client);
       } catch (error) {
         console.error('Error handling disconnect:', error);
       }
@@ -154,14 +151,14 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
-    const { limited, message } = this.rateLimiter.isRateLimited(
-      client.id,
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
       MessageType.JOIN,
     );
-    if (limited) {
+    if (rateLimitResult.limited) {
       client.emit(MessageType.ERROR, {
         type: 'RATE_LIMIT_EXCEEDED',
-        message: message || 'Too many join attempts. Please try again later.',
+        message: rateLimitResult.message || 'Too many join attempts. Please try again later.',
       });
       return;
     }
@@ -238,14 +235,14 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
-    const { limited, message } = this.rateLimiter.isRateLimited(
-      client.id,
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
       MessageType.CONTENT_CHANGE,
     );
-    if (limited) {
+    if (rateLimitResult.limited) {
       client.emit(MessageType.ERROR, {
         type: 'RATE_LIMIT_EXCEEDED',
-        message,
+        message: rateLimitResult.message,
       });
       return;
     }
@@ -324,14 +321,14 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
-    const { limited, message } = this.rateLimiter.isRateLimited(
-      client.id,
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
       MessageType.CURSOR_MOVE,
     );
-    if (limited) {
+    if (rateLimitResult.limited) {
       client.emit(MessageType.ERROR, {
         type: 'RATE_LIMIT_EXCEEDED',
-        message,
+        message: rateLimitResult.message,
       });
       return;
     }

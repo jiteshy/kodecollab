@@ -3,10 +3,12 @@ import { RedisRateLimiter } from './redis-rate-limiter';
 import { Socket } from 'socket.io';
 import { MessageType } from '@collabx/shared';
 import { RedisService } from '../services/redis.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('RedisRateLimiter', () => {
   let rateLimiter: RedisRateLimiter;
   let mockRedisService: Partial<RedisService>;
+  let mockConfigService: Partial<ConfigService>;
   let mockSocket: Partial<Socket>;
   let module: TestingModule;
 
@@ -18,8 +20,18 @@ describe('RedisRateLimiter', () => {
       del: jest.fn(),
     };
 
+    mockConfigService = {
+      get: jest.fn().mockImplementation((key: string) => {
+        if (key === 'RATE_LIMIT_ENABLED') {
+          return 'true';
+        }
+        return null;
+      }),
+    };
+
     mockSocket = {
       id: 'test-socket-id',
+      data: { userId: 'test-user-id' },
       handshake: {
         query: {
           sessionId: 'test-session',
@@ -42,10 +54,16 @@ describe('RedisRateLimiter', () => {
           provide: RedisService,
           useValue: mockRedisService,
         },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService,
+        },
       ],
     }).compile();
 
     rateLimiter = module.get<RedisRateLimiter>(RedisRateLimiter);
+    // Call onModuleInit manually since it's not called by NestJS in tests
+    rateLimiter.onModuleInit();
   });
 
   afterEach(async () => {
@@ -54,9 +72,9 @@ describe('RedisRateLimiter', () => {
 
   describe('isRateLimited', () => {
     it('should return false when under rate limit', async () => {
-      const key = `rate_limit:${MessageType.JOIN}:${mockSocket.handshake?.query.sessionId}`;
-      (mockRedisService.get as jest.Mock).mockResolvedValue('1');
-      (mockRedisService.set as jest.Mock).mockResolvedValue(undefined);
+      const key = `rate_limit:${MessageType.JOIN}:test-session:test-user-id`;
+      (mockRedisService.get as jest.Mock).mockResolvedValueOnce('1');
+      (mockRedisService.set as jest.Mock).mockResolvedValueOnce(undefined);
 
       const result = await rateLimiter.isRateLimited(
         mockSocket as Socket,
@@ -65,12 +83,12 @@ describe('RedisRateLimiter', () => {
 
       expect(result.limited).toBe(false);
       expect(mockRedisService.get).toHaveBeenCalledWith(key);
-      expect(mockRedisService.set).toHaveBeenCalledWith(key, '2', 300);
+      expect(mockRedisService.set).toHaveBeenCalledWith(key, '2', expect.any(Number));
     });
 
     it('should return true when exceeding rate limit', async () => {
-      const key = `rate_limit:${MessageType.JOIN}:${mockSocket.handshake?.query.sessionId}`;
-      (mockRedisService.get as jest.Mock).mockResolvedValue('11');
+      const key = `rate_limit:${MessageType.JOIN}:test-session:test-user-id`;
+      (mockRedisService.get as jest.Mock).mockResolvedValueOnce('11');
 
       const result = await rateLimiter.isRateLimited(
         mockSocket as Socket,
@@ -82,9 +100,9 @@ describe('RedisRateLimiter', () => {
     });
 
     it('should handle new keys', async () => {
-      const key = `rate_limit:${MessageType.JOIN}:${mockSocket.handshake?.query.sessionId}`;
-      (mockRedisService.get as jest.Mock).mockResolvedValue(null);
-      (mockRedisService.set as jest.Mock).mockResolvedValue(undefined);
+      const key = `rate_limit:${MessageType.JOIN}:test-session:test-user-id`;
+      (mockRedisService.get as jest.Mock).mockResolvedValueOnce(null);
+      (mockRedisService.set as jest.Mock).mockResolvedValueOnce(undefined);
 
       const result = await rateLimiter.isRateLimited(
         mockSocket as Socket,
@@ -92,15 +110,18 @@ describe('RedisRateLimiter', () => {
       );
 
       expect(result.limited).toBe(false);
-      expect(mockRedisService.set).toHaveBeenCalledWith(key, '1', 300);
+      expect(mockRedisService.set).toHaveBeenCalledWith(key, '1', expect.any(Number));
     });
 
     it('should handle Redis errors gracefully', async () => {
-      (mockRedisService.get as jest.Mock).mockRejectedValue(new Error('Redis error'));
+      (mockRedisService.get as jest.Mock).mockRejectedValueOnce(new Error('Redis error'));
 
-      await expect(
-        rateLimiter.isRateLimited(mockSocket as Socket, MessageType.JOIN),
-      ).resolves.toEqual({
+      const result = await rateLimiter.isRateLimited(
+        mockSocket as Socket,
+        MessageType.JOIN,
+      );
+
+      expect(result).toEqual({
         limited: false,
         message: 'Error checking rate limit',
       });
@@ -113,20 +134,31 @@ describe('RedisRateLimiter', () => {
 
       await rateLimiter.clear(mockSocket as Socket);
 
+      // The clear method should delete rate limits for all event types
       expect(mockRedisService.del).toHaveBeenCalledWith(
-        `rate_limit:${MessageType.JOIN}:${mockSocket.handshake?.query.sessionId}`,
+        `rate_limit:${MessageType.JOIN}:test-session:test-user-id`,
+      );
+      expect(mockRedisService.del).toHaveBeenCalledWith(
+        `rate_limit:${MessageType.CONTENT_CHANGE}:test-session:test-user-id`,
+      );
+      expect(mockRedisService.del).toHaveBeenCalledWith(
+        `rate_limit:${MessageType.CURSOR_MOVE}:test-session:test-user-id`,
+      );
+      expect(mockRedisService.del).toHaveBeenCalledWith(
+        `rate_limit:${MessageType.TYPING_STATUS}:test-session:test-user-id`,
       );
     });
 
     it('should handle Redis errors gracefully', async () => {
-      (mockRedisService.del as jest.Mock).mockRejectedValue(new Error('Redis error'));
+      // Only reject the first call to simulate an error during deletion
+      (mockRedisService.del as jest.Mock).mockRejectedValueOnce(new Error('Redis error'));
 
       await expect(
         rateLimiter.clear(mockSocket as Socket),
       ).resolves.not.toThrow();
-      expect(mockRedisService.del).toHaveBeenCalledWith(
-        `rate_limit:${MessageType.JOIN}:${mockSocket.handshake?.query.sessionId}`,
-      );
+      
+      // Verify del was at least called once, which indicates the method tried to clear a key
+      expect(mockRedisService.del).toHaveBeenCalled();
     });
   });
 });

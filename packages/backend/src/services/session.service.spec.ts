@@ -275,10 +275,24 @@ describe('SessionService', () => {
   });
 
   describe('cleanupInactiveSessions', () => {
-    it('should delete inactive sessions', async () => {
+    it('should delete inactive and empty sessions', async () => {
       const now = Date.now();
-      const activeSession: Session = {
-        id: 'active-session',
+      
+      // Active session with users - shouldn't be deleted
+      const activeSessionWithUsers: Session = {
+        id: 'active-session-with-users',
+        content: '',
+        language: 'javascript',
+        lastActive: now,
+        users: new Map([
+          ['1', { id: '1', username: 'user1', color: '#000000', lastActive: now, sessionId: 'active-session-with-users' }],
+        ]),
+        createdAt: now,
+      };
+      
+      // Active session but empty - should be deleted
+      const emptyActiveSession: Session = {
+        id: 'empty-active-session',
         content: '',
         language: 'javascript',
         lastActive: now,
@@ -286,21 +300,32 @@ describe('SessionService', () => {
         createdAt: now,
       };
 
+      // Inactive session - should be deleted
       const inactiveSession: Session = {
         id: 'inactive-session',
         content: '',
         language: 'javascript',
         lastActive: now - 16 * 60 * 1000, // 16 minutes ago
-        users: new Map(),
+        users: new Map([
+          ['2', { id: '2', username: 'user2', color: '#000000', lastActive: now - 16 * 60 * 1000, sessionId: 'inactive-session' }],
+        ]),
         createdAt: now - 16 * 60 * 1000,
       };
 
-      mockRedisService.getAllSessions.mockResolvedValue([activeSession, inactiveSession]);
+      mockRedisService.getAllSessions.mockResolvedValue([
+        activeSessionWithUsers, 
+        emptyActiveSession, 
+        inactiveSession
+      ]);
 
       await service.cleanupInactiveSessions();
 
+      // Should delete the inactive and empty session
       expect(mockRedisService.deleteSession).toHaveBeenCalledWith('inactive-session');
-      expect(mockRedisService.deleteSession).not.toHaveBeenCalledWith('active-session');
+      expect(mockRedisService.deleteSession).toHaveBeenCalledWith('empty-active-session');
+      
+      // Should not delete the active session with users
+      expect(mockRedisService.deleteSession).not.toHaveBeenCalledWith('active-session-with-users');
     });
 
     it('should handle empty sessions list', async () => {

@@ -4,7 +4,7 @@ import { Server, Socket } from 'socket.io';
 import { SessionService } from '../services/session.service';
 import { ConfigService } from '@nestjs/config';
 import { MessageType, User } from '@collabx/shared';
-import { RateLimiter } from '@collabx/shared';
+import { RedisRateLimiter } from '../rate-limit/redis-rate-limiter';
 
 jest.mock('socket.io', () => {
   const mockServer = {
@@ -16,15 +16,10 @@ jest.mock('socket.io', () => {
   };
 });
 
-const mockRateLimiter = {
-  isRateLimited: jest.fn(),
-  addLimit: jest.fn(),
-} as unknown as jest.Mocked<RateLimiter>;
-
-jest.mock('@collabx/shared', () => ({
-  ...jest.requireActual('@collabx/shared'),
-  RateLimiter: jest.fn().mockImplementation(() => mockRateLimiter),
-}));
+const mockRedisRateLimiter = {
+  isRateLimited: jest.fn().mockResolvedValue({ limited: false }),
+  clear: jest.fn().mockResolvedValue(undefined),
+};
 
 describe('EditorGateway', () => {
   let gateway: EditorGateway;
@@ -73,6 +68,10 @@ describe('EditorGateway', () => {
         {
           provide: ConfigService,
           useValue: mockConfigService,
+        },
+        {
+          provide: RedisRateLimiter,
+          useValue: mockRedisRateLimiter,
         },
       ],
     }).compile();
@@ -130,7 +129,7 @@ describe('EditorGateway', () => {
         sessionId: 'test123',
       };
 
-      mockRateLimiter.isRateLimited.mockReturnValue({ limited: false });
+      mockRedisRateLimiter.isRateLimited.mockReturnValue({ limited: false });
       mockSessionService.addUserToSession.mockResolvedValue(mockUser);
 
       await gateway.handleJoin(mockSocket, { username: 'testuser' });
@@ -145,7 +144,7 @@ describe('EditorGateway', () => {
     });
 
     it('should handle rate limited join request', async () => {
-      mockRateLimiter.isRateLimited.mockReturnValue({
+      mockRedisRateLimiter.isRateLimited.mockReturnValue({
         limited: true,
         message: 'Too many join attempts',
       });
@@ -160,7 +159,7 @@ describe('EditorGateway', () => {
     });
 
     it('should handle session full error', async () => {
-      mockRateLimiter.isRateLimited.mockReturnValue({ limited: false });
+      mockRedisRateLimiter.isRateLimited.mockReturnValue({ limited: false });
       mockSessionService.addUserToSession.mockRejectedValue(new Error('Session is full'));
 
       await gateway.handleJoin(mockSocket, { username: 'testuser' });
