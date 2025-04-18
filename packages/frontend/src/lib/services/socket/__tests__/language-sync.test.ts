@@ -24,6 +24,8 @@ describe('Language Synchronization', () => {
     updateSelection: jest.fn(),
     resetUser: jest.fn(),
     onSessionFull: jest.fn(),
+    updateTypingStatus: jest.fn(),
+    removeTypingStatus: jest.fn(),
   };
   const onError = jest.fn();
 
@@ -205,6 +207,8 @@ describe('Language Synchronization', () => {
         updateSelection: jest.fn(),
         resetUser: jest.fn(),
         onSessionFull: jest.fn(),
+        updateTypingStatus: jest.fn(),
+        removeTypingStatus: jest.fn(),
       };
       const socketService2 = new SocketService(
         'test-session',
