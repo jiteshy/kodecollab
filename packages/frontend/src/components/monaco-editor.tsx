@@ -54,6 +54,10 @@ export function MonacoEditor({ sendMessage, readOnly = false, username }: Monaco
   const { theme } = useTheme();
   const editorRef = useRef<MonacoEditorType.IStandaloneCodeEditor | null>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const typingStartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const contentChangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastContentRef = useRef<string | null>(null);
+  const isTypingRef = useRef<boolean>(false);
 
   useEffect(() => {
     import('@monaco-editor/react').then(({ loader }) => {
@@ -95,32 +99,64 @@ export function MonacoEditor({ sendMessage, readOnly = false, username }: Monaco
     (value: string | undefined) => {
       if (!value) return;
 
-      // Update content in store
+      // Update content in store immediately for responsive UI
       setContent(value);
 
-      // Send content change
-      sendMessage(MessageType.CONTENT_CHANGE, { content: value });
+      // Store current content
+      lastContentRef.current = value;
 
-      // Send typing status
-      sendMessage(MessageType.TYPING_STATUS, { isTyping: true });
+      // Debounce content change events
+      if (contentChangeTimeoutRef.current) {
+        clearTimeout(contentChangeTimeoutRef.current);
+      }
 
-      // Clear typing status after 1 second of inactivity
+      contentChangeTimeoutRef.current = setTimeout(() => {
+        if (lastContentRef.current) {
+          // Send content change after debounce
+          sendMessage(MessageType.CONTENT_CHANGE, { content: lastContentRef.current });
+        }
+      }, 300); // 300ms debounce for content changes
+
+      // Debounce typing status (isTyping: true)
+      // Only send isTyping: true if not already typing
+      if (!isTypingRef.current) {
+        if (typingStartTimeoutRef.current) {
+          clearTimeout(typingStartTimeoutRef.current);
+        }
+        
+        typingStartTimeoutRef.current = setTimeout(() => {
+          isTypingRef.current = true;
+          sendMessage(MessageType.TYPING_STATUS, { isTyping: true });
+        }, 100); // Small delay to reduce typing status messages
+      }
+
+      // Reset the typing end timer on every keystroke
       if (typingTimeoutRef.current) {
         clearTimeout(typingTimeoutRef.current);
       }
 
+      // Set a timeout to send isTyping: false after inactivity
       typingTimeoutRef.current = setTimeout(() => {
-        sendMessage(MessageType.TYPING_STATUS, { isTyping: false });
+        if (isTypingRef.current) {
+          isTypingRef.current = false;
+          sendMessage(MessageType.TYPING_STATUS, { isTyping: false });
+        }
       }, 1000);
     },
     [sendMessage, setContent],
   );
 
-  // Cleanup typing timeout on unmount
+  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (typingTimeoutRef.current) {
         clearTimeout(typingTimeoutRef.current);
+      }
+      if (typingStartTimeoutRef.current) {
+        clearTimeout(typingStartTimeoutRef.current);
+      }
+      if (contentChangeTimeoutRef.current) {
+        clearTimeout(contentChangeTimeoutRef.current);
       }
     };
   }, []);
