@@ -1,27 +1,43 @@
-# CollabX - Real-time Collaborative Code Editor
+# CollabX - Real-time Collaborative Text Editor
 
-CollabX is a real-time collaborative code editor that allows multiple users to edit code together in real-time. Built with modern web technologies, it provides a seamless coding experience with features like cursor tracking, user presence, and language synchronization.
+CollabX is a real-time collaborative text editor that allows multiple users to edit text and code together in real-time. This project is ***vibe coded*** with [Cursor](https://www.cursor.com/) AI Code Editor, showcasing how modern AI tools can accelerate & transform development building production-ready apps.
 
-## Features
+## 🎯 Project Background
 
-- **Real-time Collaboration**: Multiple users can edit code simultaneously
-- **User Presence**: See who's currently in the session
-- **Cursor Tracking**: View other users' cursor positions
-- **Language Synchronization**: Editor language changes sync across all users
-- **Session Management**: Create and join sessions with unique URLs
-- **Rate Limiting**: Built-in protection against excessive requests
-- **Error Recovery**: Automatic reconnection handling
-- **Dark Mode**: Built-in dark/light theme support
+This project began as an exploration into the possibilities of AI-assisted development through Cursor. The entire build process flowed as a creative collaboration with AI, which helped:
 
-## Tech Stack
+- Create rapid feature prototypes
+- Tackle the complexities of real-time data synchronization
+- Apply websocket communication best practices
+- Build comprehensive security guardrails e.g. rate limiting
+- Deliver a robust application ready for production environments
+
+This development journey stands as a testament to how AI-assisted coding can empower developers to create sophisticated applications efficiently.
+
+## ✨ Key Features
+
+- **Seamless Real-time Collaboration**: Edit text and code with multiple participants simultaneously
+- **Frictionless Entry**: Quick access through automatic random username generation
+- **Sessions & Users**: Track who's in the session with clear indicators
+- **Intuitive Session Sharing**: Join sessions via unique URL links
+- **Activity Visualization**: See other users typing status in real time
+- **Synchronized Language Settings**: Language changes reflect instantly across all connected users
+- **Flexible Capacity Management**: User limits in a session (currently 5) with read-only fallback option
+- **Guardrails**: Robust rate limiting safeguards against excessive requests
+- **Resilient Connections**: Automatic recovery from network interruptions
+- **Dark Theme**: Toggle between dark and light themes (dark mode as default)
+
+## 🛠️ Tech Stack
 
 - **Frontend**: Next.js, TypeScript, Tailwind CSS, Monaco Editor
 - **Backend**: NestJS, TypeScript, Socket.IO
-- **Shared**: TypeScript, WebSocket
+- **Shared**: TypeScript
 - **State Management**: Zustand
-- **Styling**: Tailwind CSS, clsx, tailwind-merge
+- **UI Framework/Libraries**: Tailwind CSS, shadcn/ui
+- **Data Storage**: Redis for session storage and rate limiting
+- **Development Accelerator**: Cursor AI
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 collabx/
@@ -32,74 +48,83 @@ collabx/
 └── README.md
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- npm or yarn
-- Redis (for rate limiting)
+- pnpm
+- Redis (for session management and rate limiting)
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/collabx.git
+git clone https://github.com/jiteshy/collabx.git
 cd collabx
 ```
 
 2. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
-3. Set up environment variables:
+3. Configure environment variables:
 ```bash
-cp .env.example .env
+# Copy the example env files
+cp packages/backend/.env.example packages/backend/.env
+cp packages/frontend/.env.example packages/frontend/.env
 ```
 
-4. Start the development servers:
+4. Launch development servers:
 ```bash
-# Start backend
-npm run dev:backend
-
-# Start frontend
-npm run dev:frontend
+# Start both frontend and backend
+pnpm dev
 ```
 
-The application will be available at:
+Access the application at:
 - Frontend: http://localhost:3000
-- Backend: http://localhost:4000
+- Backend: http://localhost:3001
 
-## Development
+## 🧪 Development Workflow
 
 ### Running Tests
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run frontend tests
-npm run test:frontend
+pnpm --filter @collabx/frontend test
 
 # Run backend tests
-npm run test:backend
+pnpm --filter @collabx/backend test
+
+# Run shared tests
+pnpm --filter @collabx/shared test
 ```
 
 ### Building for Production
 
 ```bash
 # Build all packages
-npm run build
+pnpm build
 
-# Build frontend
-npm run build:frontend
-
-# Build backend
-npm run build:backend
+# Build specific packages
+pnpm --filter @collabx/frontend build
+pnpm --filter @collabx/backend build:ncc
 ```
 
-## Contributing
+## 🔒 Security Best Practices
+
+When deploying to production:
+
+1. Configure strict CORS origin values via environment variables
+2. Adjust rate limiting parameters based on expected usage patterns
+3. Set appropriate MAX_USERS_PER_SESSION limits
+4. Optimize Redis TTL & cleanup configuration for production environments
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -107,12 +132,13 @@ npm run build:backend
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
+- [Cursor](https://cursor.com/) for AI-assisted development
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) for the code editor
 - [Socket.IO](https://socket.io/) for real-time communication
 - [Tailwind CSS](https://tailwindcss.com/) for styling

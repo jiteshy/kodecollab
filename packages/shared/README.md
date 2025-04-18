@@ -1,124 +1,41 @@
 # CollabX Shared
 
-The shared package of CollabX, containing common types, interfaces, and utilities used across the frontend and backend.
+This is the shared package for the CollabX real-time collaborative editor, containing common types, interfaces, and utilities used across the frontend and backend.
 
-## Features
+## Local Development
 
-- **Type Definitions**: Shared TypeScript types and interfaces
-- **Validation Service**: Common validation utilities
-- **Rate Limiter**: Shared rate limiting implementation
-- **Constants**: Shared configuration values
-- **Utilities**: Common helper functions
+### Prerequisites
 
-## Tech Stack
+- Node.js (v18 or higher)
+- pnpm
 
-- **Language**: TypeScript
-- **Build Tool**: TypeScript Compiler
-- **Package Manager**: npm/yarn
+### Setup
 
-## Project Structure
-
-```
-shared/
-├── src/
-│   ├── types/          # TypeScript type definitions
-│   ├── services/       # Shared services
-│   ├── utils/          # Utility functions
-│   └── index.ts        # Main entry point
-└── README.md
-```
-
-## Getting Started
-
-### Installation
-
-1. Install the package in your project:
+1. Install dependencies from the root of the monorepo:
 ```bash
-npm install @collabx/shared
+pnpm install
 ```
 
-2. Import types and utilities:
-```typescript
-import { User, MessageType, ValidationService } from '@collabx/shared';
+2. Build the package:
+```bash
+# From the root directory:
+pnpm --filter @collabx/shared build
+
+# Or directly from this directory:
+pnpm build
 ```
 
-## Available Types
+### Using in Other Packages
 
-### Core Types
-
-- `MessageType`: WebSocket message type enumeration
-- `User`: User information interface
-- `Session`: Session information interface
-- `UserCursor`: Cursor position interface
-- `UserSelection`: Text selection interface
-
-### Error Types
-
-- `SocketErrorType`: WebSocket error type enumeration
-- `SocketError`: WebSocket error interface
-- `ErrorMessage`: Error message interface
-
-### Rate Limiting Types
-
-- `RateLimitConfig`: Rate limit configuration interface
-- `RateLimitState`: Rate limit state interface
-
-## Services
-
-### ValidationService
-
-```typescript
-import { ValidationService } from '@collabx/shared';
-
-// Validate session ID
-const error = ValidationService.validateSessionId(sessionId);
-
-// Validate username
-const error = ValidationService.validateUsername(username);
-```
-
-### RateLimiter
-
-```typescript
-import { RateLimiter } from '@collabx/shared';
-
-const limiter = new RateLimiter();
-limiter.addLimit('event', {
-  windowMs: 60000,
-  max: 5,
-  message: 'Rate limit exceeded'
-});
-```
-
-## Development
-
-### Building
+The shared package is automatically linked to the other packages in the monorepo. When you make changes to the shared package, you need to rebuild it for the changes to be reflected in the other packages:
 
 ```bash
-# Build the package
-npm run build
-
-# Watch mode
-npm run build:watch
+pnpm --filter @collabx/shared build
 ```
 
-### Testing
+### Available Scripts
 
-```bash
-# Run tests
-npm test
+- `pnpm build` - Build the package
+- `pnpm test` - Run tests
 
-# Run tests with coverage
-npm run test:cov
-```
-
-## Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Run tests and linting
-4. Submit a pull request
-
-## License
-
-This package is part of the CollabX project and is licensed under the MIT License. 
+See the root README for more information about the CollabX project. 
