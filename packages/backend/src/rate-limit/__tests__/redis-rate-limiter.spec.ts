@@ -22,10 +22,25 @@ describe('RedisRateLimiter', () => {
 
     mockConfigService = {
       get: jest.fn().mockImplementation((key: string) => {
-        if (key === 'RATE_LIMIT_ENABLED') {
-          return 'true';
-        }
-        return null;
+        const configs = {
+          'RATE_LIMIT_ENABLED': 'true',
+          'RATE_LIMIT_JOIN_WINDOW_MS': 60000,
+          'RATE_LIMIT_JOIN_MAX': 10,
+          'RATE_LIMIT_CONTENT_WINDOW_MS': 1000,
+          'RATE_LIMIT_CONTENT_MAX': 20,
+          'RATE_LIMIT_CURSOR_WINDOW_MS': 1000,
+          'RATE_LIMIT_CURSOR_MAX': 50,
+          'RATE_LIMIT_SELECTION_WINDOW_MS': 1000,
+          'RATE_LIMIT_SELECTION_MAX': 20,
+          'RATE_LIMIT_TYPING_WINDOW_MS': 1000,
+          'RATE_LIMIT_TYPING_MAX': 10,
+          'RATE_LIMIT_SYNC_WINDOW_MS': 10000,
+          'RATE_LIMIT_SYNC_MAX': 5,
+          'RATE_LIMIT_GLOBAL_WINDOW_MS': 60000,
+          'RATE_LIMIT_GLOBAL_MAX': 100
+        };
+        
+        return configs[key] || null;
       }),
     };
 
@@ -145,7 +160,13 @@ describe('RedisRateLimiter', () => {
         `rate_limit:${MessageType.CURSOR_MOVE}:test-session:test-user-id`,
       );
       expect(mockRedisService.del).toHaveBeenCalledWith(
+        `rate_limit:${MessageType.SELECTION_CHANGE}:test-session:test-user-id`,
+      );
+      expect(mockRedisService.del).toHaveBeenCalledWith(
         `rate_limit:${MessageType.TYPING_STATUS}:test-session:test-user-id`,
+      );
+      expect(mockRedisService.del).toHaveBeenCalledWith(
+        `rate_limit:${MessageType.SYNC_REQUEST}:test-session:test-user-id`,
       );
     });
 

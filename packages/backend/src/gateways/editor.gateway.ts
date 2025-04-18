@@ -284,6 +284,18 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
+      MessageType.LANGUAGE_CHANGE,
+    );
+    if (rateLimitResult.limited) {
+      client.emit(MessageType.ERROR, {
+        type: 'RATE_LIMIT_EXCEEDED',
+        message: rateLimitResult.message,
+      });
+      return;
+    }
+
     try {
       await this.updateUserActivity(client);
       await this.sessionService.updateSessionLanguage(sessionId, payload.language);
@@ -369,6 +381,18 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
       return;
     }
 
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
+      MessageType.SELECTION_CHANGE,
+    );
+    if (rateLimitResult.limited) {
+      client.emit(MessageType.ERROR, {
+        type: 'RATE_LIMIT_EXCEEDED',
+        message: rateLimitResult.message,
+      });
+      return;
+    }
+
     try {
       await this.updateUserActivity(client);
       const user = await this.getUserFromSocket(client);
@@ -393,7 +417,20 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const sessionId = client.handshake.query.sessionId as string;
     if (!sessionId) return;
 
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
+      MessageType.SYNC_REQUEST,
+    );
+    if (rateLimitResult.limited) {
+      client.emit(MessageType.ERROR, {
+        type: 'RATE_LIMIT_EXCEEDED',
+        message: rateLimitResult.message,
+      });
+      return;
+    }
+
     try {
+      await this.updateUserActivity(client);
       const session = await this.sessionService.getOrCreateSession(sessionId);
       client.emit(MessageType.SYNC_RESPONSE, {
         content: session.content,
@@ -424,6 +461,18 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     if (validationError) {
       client.emit(MessageType.ERROR, validationError);
+      return;
+    }
+
+    const rateLimitResult = await this.rateLimiter.isRateLimited(
+      client,
+      MessageType.TYPING_STATUS,
+    );
+    if (rateLimitResult.limited) {
+      client.emit(MessageType.ERROR, {
+        type: 'RATE_LIMIT_EXCEEDED',
+        message: rateLimitResult.message,
+      });
       return;
     }
 

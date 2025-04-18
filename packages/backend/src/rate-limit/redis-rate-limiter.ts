@@ -34,33 +34,50 @@ export class RedisRateLimiter implements OnModuleInit {
   }
 
   private configureRateLimits() {
-    // JOIN: Allow 5 attempts per minute
+    // JOIN: Allow 10 attempts per minute by default, configurable via env
     this.rateLimits.set(MessageType.JOIN, {
-      windowMs: 60000,
-      maxRequests: 5,
+      windowMs: this.configService.get<number>('RATE_LIMIT_JOIN_WINDOW_MS', 60000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_JOIN_MAX', 10),
       message: 'Too many join attempts. Please try again later.',
     });
 
-    // CONTENT_CHANGE: Allow 10 events per second
+    // CONTENT_CHANGE: Allow 20 events per second by default, configurable via env
     this.rateLimits.set(MessageType.CONTENT_CHANGE, {
-      windowMs: 1000,
-      maxRequests: 10,
+      windowMs: this.configService.get<number>('RATE_LIMIT_CONTENT_WINDOW_MS', 1000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_CONTENT_MAX', 20),
       message: 'Too many content changes. Please wait a moment.',
     });
 
-    // CURSOR_MOVE: Allow 30 events per 100ms
+    // CURSOR_MOVE: Allow 50 events per second by default, configurable via env
     this.rateLimits.set(MessageType.CURSOR_MOVE, {
-      windowMs: 100,
-      maxRequests: 30,
+      windowMs: this.configService.get<number>('RATE_LIMIT_CURSOR_WINDOW_MS', 1000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_CURSOR_MAX', 50),
       message: 'Too many cursor movements. Please wait a moment.',
     });
 
-    // TYPING_STATUS: Allow 5 events per second
+    // SELECTION_CHANGE: Add rate limiting for selection changes
+    this.rateLimits.set(MessageType.SELECTION_CHANGE, {
+      windowMs: this.configService.get<number>('RATE_LIMIT_SELECTION_WINDOW_MS', 1000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_SELECTION_MAX', 20),
+      message: 'Too many selection changes. Please wait a moment.',
+    });
+
+    // TYPING_STATUS: Allow 10 events per second by default, configurable via env
     this.rateLimits.set(MessageType.TYPING_STATUS, {
-      windowMs: 1000,
-      maxRequests: 5,
+      windowMs: this.configService.get<number>('RATE_LIMIT_TYPING_WINDOW_MS', 1000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_TYPING_MAX', 10),
       message: 'Too many typing status updates. Please wait a moment.',
     });
+
+    // Add limits for SYNC_REQUEST to prevent sync flooding
+    this.rateLimits.set(MessageType.SYNC_REQUEST, {
+      windowMs: this.configService.get<number>('RATE_LIMIT_SYNC_WINDOW_MS', 10000),
+      maxRequests: this.configService.get<number>('RATE_LIMIT_SYNC_MAX', 5),
+      message: 'Too many sync requests. Please wait a moment.',
+    });
+
+    // Log the configured rate limits
+    this.logger.log(`Rate limits configured: JOIN=${this.rateLimits.get(MessageType.JOIN)?.maxRequests}/${this.rateLimits.get(MessageType.JOIN)?.windowMs}ms, CONTENT=${this.rateLimits.get(MessageType.CONTENT_CHANGE)?.maxRequests}/${this.rateLimits.get(MessageType.CONTENT_CHANGE)?.windowMs}ms`);
   }
 
   /**
