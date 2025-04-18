@@ -51,12 +51,34 @@ export default function SessionPage() {
       });
   }, [sessionId]);
 
+  const shareSessionLink = useCallback(() => {
+    const url = `${window.location.origin}/${sessionId}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'CollabX Session',
+        text: 'Join my collaborative editing session on CollabX',
+        url: url
+      }).catch((error) => {
+        console.error('Error sharing:', error);
+      });
+    } else {
+      toast.error('Web Share API not supported in your browser');
+    }
+  }, [sessionId]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Copy Session Link: Cmd/Ctrl + Shift + C
       if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.key === 'c') {
         event.preventDefault();
         copySessionLink();
+      }
+
+      // Share Session Link: Cmd/Ctrl + Shift + S
+      if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.key === 's') {
+        event.preventDefault();
+        shareSessionLink();
       }
 
       // Toggle Dark Mode: Cmd/Ctrl + Shift + L
@@ -68,7 +90,7 @@ export default function SessionPage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [copySessionLink, setTheme, theme]);
+  }, [copySessionLink, shareSessionLink, setTheme, theme]);
 
   if (!username) {
     return null;
@@ -99,6 +121,7 @@ export default function SessionPage() {
                   username={username}
                   users={users}
                   copySessionLink={copySessionLink}
+                  shareSessionLink={shareSessionLink}
                 />
               </div>
             </div>

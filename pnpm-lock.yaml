@@ -280,6 +280,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.4(@types/react@19.0.12)
+      '@types/web':
+        specifier: ^0.0.220
+        version: 0.0.220
       dotenv:
         specifier: ^16.4.5
         version: 16.4.7
@@ -1732,6 +1735,9 @@ packages:
 
   '@types/validator@13.12.3':
     resolution: {integrity: sha512-2ipwZ2NydGQJImne+FhNdhgRM37e9lCev99KnqkbFHd94Xn/mErARWI1RSLem1QA19ch5kOhzIZd7e8CA2FI8g==}
+
+  '@types/web@0.0.220':
+    resolution: {integrity: sha512-o3nLi2n2/eLuOD+QosEwIkSInu2l/zNEYVSGH6d1IBfGwmVFnPZUHdGphalmZ6VmAVPCt1CTA11NhlAWet0bOQ==}
 
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
@@ -6955,6 +6961,8 @@ snapshots:
   '@types/uuid@9.0.8': {}
 
   '@types/validator@13.12.3': {}
+
+  '@types/web@0.0.220': {}
 
   '@types/ws@8.18.1':
     dependencies:
