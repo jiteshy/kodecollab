@@ -1,13 +1,15 @@
-import { Copy, Users, Circle } from 'lucide-react';
+import { Copy, Share2, Users, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User } from '@collabx/shared';
+import { useEffect, useState } from 'react';
 
 interface SessionCardProps {
   sessionId: string;
   username: string;
   users: User[];
   copySessionLink: () => void;
+  shareSessionLink?: () => void;
 }
 
 function CollaboratorShimmer() {
@@ -28,8 +30,13 @@ function CollaboratorShimmer() {
   );
 }
 
-export function SessionCard({ sessionId, username, users, copySessionLink }: SessionCardProps) {
+export function SessionCard({ sessionId, username, users, copySessionLink, shareSessionLink }: SessionCardProps) {
   const isSessionFull = users.length >= 5;
+  const [isWebShareSupported, setIsWebShareSupported] = useState(false);
+  
+  useEffect(() => {
+    setIsWebShareSupported(typeof navigator !== 'undefined' && !!navigator.share);
+  }, []);
 
   return (
     <div className="bg-zinc-100 w-full h-[220px] overflow-auto scrollbar-hide lg:h-auto rounded-lg p-3 lg:p-4 shadow-sm border border-zinc-200 lg:mb-6 dark:bg-zinc-800 dark:border-zinc-700">
@@ -47,9 +54,22 @@ export function SessionCard({ sessionId, username, users, copySessionLink }: Ses
           size="icon"
           className="ml-2 !bg-zinc-700 text-zinc-100 cursor-pointer hover:text-white hover:!bg-zinc-950 dark:!bg-zinc-700"
           onClick={copySessionLink}
+          title="Copy session link"
         >
           <Copy className="h-3 w-3 lg:h-4 lg:w-4" />
         </Button>
+
+        {isWebShareSupported && shareSessionLink && (
+          <Button
+            variant="outline"
+            size="icon"
+            className="ml-2 !bg-zinc-700 text-zinc-100 cursor-pointer hover:text-white hover:!bg-zinc-950 dark:!bg-zinc-700"
+            onClick={shareSessionLink}
+            title="Share session link"
+          >
+            <Share2 className="h-3 w-3 lg:h-4 lg:w-4" />
+          </Button>
+        )}
       </div>
 
       {/* Collaborators */}
