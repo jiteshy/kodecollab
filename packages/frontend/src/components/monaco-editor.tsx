@@ -10,6 +10,7 @@ import { DEFAULT_CONTENT, DEFAULT_LANGUAGE, MessageType } from '@collabx/shared'
 import { useTheme } from 'next-themes';
 import { EditorShimmer } from './editor-shimmer';
 import { TypingIndicator } from './typing-indicator';
+import { createDebouncedHandler } from '@/lib/utils/debounce';
 
 // Dynamically import Monaco editor
 const Editor = dynamic(() => import('@monaco-editor/react').then((mod) => mod.Editor), {
@@ -53,11 +54,42 @@ export function MonacoEditor({ sendMessage, readOnly = false, username }: Monaco
   const typingUsers = useUserStore((state) => state.typingUsers);
   const { theme } = useTheme();
   const editorRef = useRef<MonacoEditorType.IStandaloneCodeEditor | null>(null);
-  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const typingStartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const contentChangeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastContentRef = useRef<string | null>(null);
   const isTypingRef = useRef<boolean>(false);
+
+  // Create debounced handlers for different events
+  const contentChangeHandler = useMemo(
+    () => createDebouncedHandler<string>(
+      (value) => {
+        sendMessage(MessageType.CONTENT_CHANGE, { content: value });
+      },
+      300 // 300ms debounce for content changes
+    ),
+    [sendMessage]
+  );
+
+  const typingStartHandler = useMemo(
+    () => createDebouncedHandler<void>(
+      () => {
+        isTypingRef.current = true;
+        sendMessage(MessageType.TYPING_STATUS, { isTyping: true });
+      },
+      100 // 100ms debounce for typing status start
+    ),
+    [sendMessage]
+  );
+
+  const typingEndHandler = useMemo(
+    () => createDebouncedHandler<void>(
+      () => {
+        if (isTypingRef.current) {
+          isTypingRef.current = false;
+          sendMessage(MessageType.TYPING_STATUS, { isTyping: false });
+        }
+      },
+      1000 // 1000ms delay for typing status end
+    ),
+    [sendMessage]
+  );
 
   useEffect(() => {
     import('@monaco-editor/react').then(({ loader }) => {
@@ -102,64 +134,30 @@ export function MonacoEditor({ sendMessage, readOnly = false, username }: Monaco
       // Update content in store immediately for responsive UI
       setContent(value);
 
-      // Store current content
-      lastContentRef.current = value;
-
       // Debounce content change events
-      if (contentChangeTimeoutRef.current) {
-        clearTimeout(contentChangeTimeoutRef.current);
-      }
-
-      contentChangeTimeoutRef.current = setTimeout(() => {
-        if (lastContentRef.current) {
-          // Send content change after debounce
-          sendMessage(MessageType.CONTENT_CHANGE, { content: lastContentRef.current });
-        }
-      }, 300); // 300ms debounce for content changes
+      contentChangeHandler.trigger(value);
 
       // Debounce typing status (isTyping: true)
       // Only send isTyping: true if not already typing
       if (!isTypingRef.current) {
-        if (typingStartTimeoutRef.current) {
-          clearTimeout(typingStartTimeoutRef.current);
-        }
-        
-        typingStartTimeoutRef.current = setTimeout(() => {
-          isTypingRef.current = true;
-          sendMessage(MessageType.TYPING_STATUS, { isTyping: true });
-        }, 100); // Small delay to reduce typing status messages
+        typingStartHandler.trigger();
       }
 
       // Reset the typing end timer on every keystroke
-      if (typingTimeoutRef.current) {
-        clearTimeout(typingTimeoutRef.current);
-      }
-
-      // Set a timeout to send isTyping: false after inactivity
-      typingTimeoutRef.current = setTimeout(() => {
-        if (isTypingRef.current) {
-          isTypingRef.current = false;
-          sendMessage(MessageType.TYPING_STATUS, { isTyping: false });
-        }
-      }, 1000);
+      typingEndHandler.cancel();
+      typingEndHandler.trigger();
     },
-    [sendMessage, setContent],
+    [setContent, contentChangeHandler, typingStartHandler, typingEndHandler]
   );
 
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
-      if (typingTimeoutRef.current) {
-        clearTimeout(typingTimeoutRef.current);
-      }
-      if (typingStartTimeoutRef.current) {
-        clearTimeout(typingStartTimeoutRef.current);
-      }
-      if (contentChangeTimeoutRef.current) {
-        clearTimeout(contentChangeTimeoutRef.current);
-      }
+      contentChangeHandler.cancel();
+      typingStartHandler.cancel();
+      typingEndHandler.cancel();
     };
-  }, []);
+  }, [contentChangeHandler, typingStartHandler, typingEndHandler]);
 
   const editorOptions = useMemo(
     (): MonacoEditorType.IStandaloneEditorConstructionOptions => ({
