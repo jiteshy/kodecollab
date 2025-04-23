@@ -1,18 +1,18 @@
 # CollabX - Real-time Collaborative Text Editor
 
-CollabX is a real-time collaborative text editor that allows multiple users to edit text and code together in real-time. This project is ***vibe coded*** with [Cursor](https://www.cursor.com/) AI Code Editor, showcasing how modern AI tools can accelerate & transform development building production-ready apps.
+CollabX is a real-time collaborative text editor that allows multiple users to edit text and code together in real-time. This project is ***vibe coded*** with [Cursor](https://www.cursor.com/) AI Code Editor, exploring how modern AI tools can accelerate & transform development building production-ready apps. 
 
-## 🎯 Project Background
+## 🎯 App Background
 
-This project began as an exploration into the possibilities of AI-assisted development through Cursor. The entire build process flowed as a creative collaboration with AI, which helped:
+This app began as an exploration with [Replit](https://replit.com/), initial output of which was fed to [Cursor](https://www.cursor.com/) as I personally liked Cursor better. (A detailed write-up of my experience with Replit, Cursor & Lovable while building this app is documented [here](https://medium.com/jiteshy)). 
+
+After the initial lift from [Replit](https://replit.com/), the app is entirely built with [Cursor](https://www.cursor.com/) in my spare time over the course of 10 days. Cursor helped
 
 - Create rapid feature prototypes
 - Tackle the complexities of real-time data synchronization
 - Apply websocket communication best practices
-- Build comprehensive security guardrails e.g. rate limiting
+- Add security guardrails e.g. rate limiting
 - Deliver a robust application ready for production environments
-
-This development journey stands as a testament to how AI-assisted coding can empower developers to create sophisticated applications efficiently.
 
 ## ✨ Key Features
 
