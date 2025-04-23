@@ -4,13 +4,13 @@ CollabX is a real-time collaborative text editor that allows multiple users to e
 
 ## 🎯 App Background
 
-This app began as an exploration with [Replit](https://replit.com/), initial output of which was fed to [Cursor](https://www.cursor.com/) as I personally liked Cursor better. (A detailed write-up of my experience with Replit, Cursor & Lovable while building this app is documented [here](https://medium.com/jiteshy)). 
+This app began as an exploration with [Replit](https://replit.com/), initial output of which was fed to [Cursor](https://www.cursor.com/) as I personally liked Cursor better. (A detailed write-up of my experience with Replit, Cursor & Lovable while building this app is documented [here]([https://medium.com/jiteshy](https://medium.com/@jiteshy/real-app-the-same-prompt-3-ai-coding-assistants-1-winner-71e58234da99))). 
 
-After the initial lift from [Replit](https://replit.com/), the app is entirely built with [Cursor](https://www.cursor.com/) in my spare time over the course of 10 days. Cursor helped
+After the initial lift from [Replit](https://replit.com/), the app is entirely built with [Cursor](https://www.cursor.com/) in my spare time over the course of 10 days. The coding assistant helped
 
 - Create rapid feature prototypes
 - Tackle the complexities of real-time data synchronization
-- Apply websocket communication best practices
+- Setup websocket communication
 - Add security guardrails e.g. rate limiting
 - Deliver a robust application ready for production environments
 
@@ -23,19 +23,19 @@ After the initial lift from [Replit](https://replit.com/), the app is entirely b
 - **Activity Visualization**: See other users typing status in real time
 - **Synchronized Language Settings**: Language changes reflect instantly across all connected users
 - **Flexible Capacity Management**: User limits in a session (currently 5) with read-only fallback option
-- **Guardrails**: Robust rate limiting safeguards against excessive requests
+- **Guardrails**: Rate limiting safeguards against excessive requests
 - **Resilient Connections**: Automatic recovery from network interruptions
 - **Dark Theme**: Toggle between dark and light themes (dark mode as default)
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js, TypeScript, Tailwind CSS, Monaco Editor
+- **Frontend**: Next.js, TypeScript, Tailwind CSS, Monaco Editor, Zustand
 - **Backend**: NestJS, TypeScript, Socket.IO
 - **Shared**: TypeScript
 - **State Management**: Zustand
 - **UI Framework/Libraries**: Tailwind CSS, shadcn/ui
 - **Data Storage**: Redis for session storage and rate limiting
-- **Development Accelerator**: Cursor AI
+- **Development Accelerator**: Cursor AI, Replit
 
 ## 📁 Project Structure
 
@@ -134,11 +134,11 @@ When deploying to production:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- [Cursor](https://cursor.com/) for AI-assisted development
+- [Cursor](https://cursor.com/) & [Replit](https://replit.com/) for AI-assisted development
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) for the code editor
 - [Socket.IO](https://socket.io/) for real-time communication
-- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Tailwind CSS](https://tailwindcss.com/) & [shadcn](https://ui.shadcn.com/) for styling
