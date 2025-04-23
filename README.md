@@ -4,9 +4,9 @@ CollabX is a real-time collaborative text editor that allows multiple users to e
 
 ## 🎯 App Background
 
-This app began as an exploration with [Replit](https://replit.com/), initial output of which was fed to [Cursor](https://www.cursor.com/) as I personally liked Cursor better. (A detailed write-up of my experience with Replit, Cursor & Lovable while building this app is documented [here]([https://medium.com/jiteshy](https://medium.com/@jiteshy/real-app-the-same-prompt-3-ai-coding-assistants-1-winner-71e58234da99))). 
+This app began as an exploration with [Replit](https://replit.com/), initial output of which was fed to Cursor as I personally liked Cursor better. (A detailed write-up of my experience with Replit, Cursor & Lovable while building this app is documented [here]([https://medium.com/jiteshy](https://medium.com/@jiteshy/real-app-the-same-prompt-3-ai-coding-assistants-1-winner-71e58234da99))). 
 
-After the initial lift from [Replit](https://replit.com/), the app is entirely built with [Cursor](https://www.cursor.com/) in my spare time over the course of 10 days. The coding assistant helped
+After the initial lift from Replit, the app is entirely built with Cursor in my spare time over the course of 10 days. The coding assistant helped
 
 - Create rapid feature prototypes
 - Tackle the complexities of real-time data synchronization
