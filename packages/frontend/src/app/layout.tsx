@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '../components/theme-provider';
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   subsets: ['latin'],
@@ -71,6 +72,7 @@ export default function RootLayout({
         </ThemeProvider>
         <Toaster position="bottom-right" />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
