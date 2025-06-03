@@ -13,9 +13,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'CollabX - Real-time Collaborative Code Editor',
-  description: 'A modern, real-time collaborative code editor for seamless coding sessions.',
-  keywords: 'collaborative editor, code editor, real-time collaboration, pair programming, code sharing',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://collabx.app'),
+  title: {
+    default: 'CollabX - Real-time Collaborative Code Editor',
+    template: '%s | CollabX'
+  },
+  description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.',
+  keywords: [
+    'collaborative editor',
+    'online code editor',
+    'code editor',
+    'real-time collaboration',
+    'pair programming',
+    'code sharing',
+    'online code editor',
+    'team coding',
+    'remote collaboration',
+    'web development',
+    'programming tools'
+  ],
   authors: [{ name: 'CollabX Team' }],
   creator: 'CollabX',
   publisher: 'CollabX',
@@ -24,13 +40,12 @@ export const metadata: Metadata = {
     telephone: false,
     address: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://collabx.app'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'CollabX - Real-time Collaborative Code Editor',
-    description: 'A modern, real-time collaborative code editor for seamless coding sessions.',
+    description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.',
     url: 'https://collabx.app',
     siteName: 'CollabX',
     images: [
@@ -47,7 +62,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'CollabX - Real-time Collaborative Code Editor',
-    description: 'A modern, real-time collaborative code editor for seamless coding sessions.',
+    description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration.',
     images: ['/og-image.png'],
     creator: '@collabx',
   },
@@ -55,6 +70,21 @@ export const metadata: Metadata = {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
+    userScalable: true,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-site-verification',
   },
   category: 'Technology',
 };
