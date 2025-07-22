@@ -1,0 +1,204 @@
+import { Code2, Copy, Share2, Users, Circle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
+
+export function LandingContent() {
+  return (
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-col lg:flex-row">
+        {/* Left Column */}
+        <div className="w-full lg:w-1/3 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 flex flex-col lg:h-screen overflow-hidden">
+          <div className="w-full md:w-4/5 m-auto lg:w-full">
+            {/* Header */}
+            <div className="p-4 lg:pl-6 border-b border-slate-700/50">
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-2">
+                  <Code2 className="h-8 w-8 lg:h-10 lg:w-10 text-white bg-gradient-to-r from-orange-600 to-orange-400 rounded-full p-1" />
+                  <span className="text-2xl lg:text-4xl -mt-1 lg:-mt-2 text-zinc-200 font-light bg-clip-text">
+                    collab<span className="text-white font-extrabold">x</span>
+                  </span>
+                </div>
+                <ThemeToggle />
+              </div>
+            </div>
+          </div>
+
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto scrollbar-hide">
+            <div className="p-4 lg:pt-0 w-full md:w-4/5 m-auto lg:w-full">
+              <div className="flex md:grid flex-col md:grid-cols-2 lg:flex lg:flex-col gap-4 lg:h-[calc(100vh-140px)]">
+                {/* Hero Section */}
+                <div className="text-center md:text-left lg:pl-2 lg:pt-5">
+                  <h1 className="text-3xl text-white mb-3 lg:mb-4">
+                    <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-400">
+                      No-Nonsense
+                    </span>{' '}
+                    <span className="text-zinc-300">
+                      Text <br />
+                      Collaboration
+                    </span>
+                  </h1>
+                  <p className="text-zinc-400 text-base lg:text-lg leading-relaxed">
+                    Edit code, notes or any text together in real-time.
+                  </p>
+                  <p className="text-zinc-400 text-base lg:text-lg leading-relaxed">
+                    <span className="text-zinc-200 font-bold">NO sign-up</span>, just share the link and start{' '}
+                    <br />
+                    collaborating.
+                  </p>
+                </div>
+
+                {/* Demo Session Card */}
+                <div className="bg-zinc-100 w-full h-[220px] overflow-auto scrollbar-hide lg:h-auto rounded-lg p-3 lg:p-4 shadow-sm border border-zinc-200 lg:mb-6 dark:bg-zinc-800 dark:border-zinc-700">
+                  <h2 className="font-semibold mb-2 text-slate-900 text-base lg:text-lg dark:text-zinc-200">
+                    How It Works
+                  </h2>
+                  <div className="space-y-3 text-sm text-slate-700 dark:text-zinc-300">
+                    <div className="flex items-start space-x-2">
+                      <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
+                      <span>Visit collabx.app to instantly create a new collaboration session</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
+                      <span>Share the unique session URL with your team members</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
+                      <span>Start editing together in real-time with syntax highlighting</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
+                      <span>Support for 20+ programming languages and plain text</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
+                    <h3 className="font-medium mb-2 text-slate-900 dark:text-zinc-200">Features</h3>
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded dark:bg-orange-900 dark:text-orange-200">Real-time sync</span>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200">No registration</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded dark:bg-green-900 dark:text-green-200">Multi-language</span>
+                      <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded dark:bg-purple-900 dark:text-purple-200">Team collaboration</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Editor Preview */}
+        <div className="relative lg:w-2/3 lg:pt-4 lg:pb-10 lg:pr-4 pb-4 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 lg:from-slate-700 lg:via-slate-700 lg:to-slate-700 flex min-h-[500px] lg:min-h-screen">
+          <div className="flex-1 px-4 lg:px-0">
+            <div className="bg-zinc-100 w-full md:w-4/5 m-auto lg:w-full border rounded-lg shadow-2xl overflow-hidden h-full flex flex-col dark:bg-zinc-800">
+              {/* Editor Header */}
+              <div className="pr-4 lg:pr-6 pl-4 md:pl-12 h-12 flex items-center justify-between border-b border-zinc-200 dark:border-zinc-700">
+                <div className="flex items-center space-x-4">
+                  <div className="text-zinc-600 dark:text-zinc-400 text-sm font-medium">
+                    JavaScript
+                  </div>
+                  <div className="flex items-center space-x-2 text-zinc-600 dark:text-zinc-400">
+                    <Users className="h-4 w-4" />
+                    <span className="text-xs">Real-time collaboration</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Editor Content Preview */}
+              <div className="flex-1 p-4 font-mono text-sm bg-[#1e1e1e] text-zinc-300 overflow-hidden">
+                <div className="space-y-1">
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">1</span>
+                    <span><span className="text-purple-400">function</span> <span className="text-blue-300">greet</span><span className="text-yellow-300">(</span><span className="text-orange-300">name</span><span className="text-yellow-300">)</span> <span className="text-yellow-300">{'{'}</span></span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">2</span>
+                    <span className="ml-4 text-zinc-500">// This is a collaborative editor</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">3</span>
+                    <span className="ml-4 text-zinc-500">// Any changes you make are visible to others in real-time</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">4</span>
+                    <span className="ml-4"><span className="text-purple-400">return</span> <span className="text-green-300">`Welcome to CollabX, ${'{'}{'{'}name{'}'}{'}'}`</span><span className="text-yellow-300">;</span></span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">5</span>
+                    <span><span className="text-yellow-300">{'}'}</span></span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">6</span>
+                    <span></span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">7</span>
+                    <span className="text-zinc-500">// Try editing this code together with your team</span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">8</span>
+                    <span><span className="text-purple-400">const</span> <span className="text-blue-300">message</span> <span className="text-yellow-300">=</span> <span className="text-blue-300">greet</span><span className="text-yellow-300">(</span><span className="text-green-300">'Team'</span><span className="text-yellow-300">);</span></span>
+                  </div>
+                  <div className="flex">
+                    <span className="text-zinc-500 w-8 text-right mr-4">9</span>
+                    <span><span className="text-blue-300">console</span><span className="text-yellow-300">.</span><span className="text-blue-300">log</span><span className="text-yellow-300">(</span><span className="text-orange-300">message</span><span className="text-yellow-300">);</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="w-full lg:absolute bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 lg:from-transparent lg:via-transparent lg:to-transparent bottom-0 px-4 lg:px-6 pt-1 pb-2">
+        <div className="flex justify-between items-center text-xs lg:text-sm text-slate-300">
+          <span>
+            © {new Date().getFullYear()} CollabX - Real-time Collaborative Code Editor
+          </span>
+          
+          <div className="lg:flex items-center justify-center hidden">
+            <div className="text-xs text-zinc-400">
+              <span>Start collaborating instantly - No sign-up required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Schema.org JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "CollabX",
+            "applicationCategory": "DeveloperApplication",
+            "description": "Real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.",
+            "url": "https://collabx.app",
+            "operatingSystem": "Any",
+            "permissions": "No registration required",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Real-time collaborative editing",
+              "Syntax highlighting for 20+ languages",
+              "No sign-up required",
+              "Instant session sharing",
+              "Multi-user support",
+              "Cross-platform compatibility"
+            ],
+            "keywords": "collaborative editor, online code editor, real-time collaboration, pair programming, code sharing, team coding",
+            "author": {
+              "@type": "Organization",
+              "name": "CollabX Team"
+            }
+          })
+        }}
+      />
+    </div>
+  );
+} 

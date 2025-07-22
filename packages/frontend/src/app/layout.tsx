@@ -15,10 +15,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://collabx.app'),
   title: {
-    default: 'CollabX - Real-time Collaborative Code Editor',
+    default: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
     template: '%s | CollabX'
   },
-  description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.',
+  description: 'CollabX is a free real-time collaborative code editor that enables instant pair programming and code sharing. No sign-up required - just visit and start collaborating with your team instantly. Features syntax highlighting for 20+ languages.',
   keywords: [
     'collaborative editor',
     'online code editor',
@@ -30,7 +30,10 @@ export const metadata: Metadata = {
     'team coding',
     'remote collaboration',
     'web development',
-    'programming tools'
+    'programming tools',
+    'free code editor',
+    'no signup',
+    'instant collaboration'
   ],
   authors: [{ name: 'CollabX Team' }],
   creator: 'CollabX',
@@ -44,8 +47,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'CollabX - Real-time Collaborative Code Editor',
-    description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.',
+    title: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
+    description: 'Free real-time collaborative code editor for instant pair programming. No sign-up required - just visit and start collaborating with your team instantly.',
     url: 'https://collabx.app',
     siteName: 'CollabX',
     images: [
@@ -61,8 +64,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CollabX - Real-time Collaborative Code Editor',
-    description: 'CollabX is a powerful real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration.',
+    title: 'CollabX - Free Real-time Collaborative Code Editor',
+    description: 'Free real-time collaborative code editor for instant pair programming. No sign-up required - just visit and start collaborating.',
     images: ['/og-image.png'],
     creator: '@collabx',
   },
@@ -84,7 +87,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-site-verification',
+    // Replace with your actual Google Search Console verification code
+    // google: 'your-google-site-verification-code-here',
   },
   category: 'Technology',
 };
