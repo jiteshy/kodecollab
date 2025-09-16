@@ -10,7 +10,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['collabx.app'],
+    domains: ['kodecollab.com'],
     formats: ['image/avif', 'image/webp'],
   },
   compress: true,

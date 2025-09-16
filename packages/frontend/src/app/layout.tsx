@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://collabx.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://kodecollab.com'),
   title: {
     default: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
     template: '%s | CollabX'
@@ -44,12 +44,12 @@ export const metadata: Metadata = {
     address: false,
   },
   alternates: {
-    canonical: 'https://collabx.app',
+    canonical: 'https://kodecollab.com',
   },
   openGraph: {
     title: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
     description: 'Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with no sign-up required.',
-    url: 'https://collabx.app',
+    url: 'https://kodecollab.com',
     siteName: 'CollabX',
     images: [
       {

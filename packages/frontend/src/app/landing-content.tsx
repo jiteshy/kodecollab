@@ -173,7 +173,7 @@ export function LandingContent() {
             "name": "CollabX",
             "applicationCategory": "DeveloperApplication",
             "description": "Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with instant sessions, syntax highlighting for 20+ languages, and live cursor tracking. No sign-up required.",
-            "url": "https://collabx.app",
+            "url": "https://kodecollab.com",
             "operatingSystem": "Any",
             "permissions": "No registration required",
             "offers": {
