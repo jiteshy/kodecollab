@@ -1,6 +1,6 @@
-# CollabX Frontend
+# KodeCollab Frontend
 
-This is the frontend package for the CollabX real-time collaborative editor.
+This is the frontend package for the KodeCollab real-time collaborative editor.
 
 ## Local Development
 
@@ -40,4 +40,4 @@ The application will be available at http://localhost:3000
 - `pnpm lint` - Run ESLint
 - `pnpm test` - Run tests
 
-See the root README for more information about the CollabX project.
+See the root README for more information about the KodeCollab project.

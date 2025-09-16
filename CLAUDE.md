@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CollabX is a real-time collaborative text editor built with a pnpm monorepo structure. The project consists of three main packages:
+KodeCollab is a real-time collaborative text editor built with a pnpm monorepo structure. The project consists of three main packages:
 
 - **Frontend** (`packages/frontend`): Next.js application with Monaco Editor, Socket.IO client, and Zustand state management
 - **Backend** (`packages/backend`): NestJS WebSocket server with Redis session management and rate limiting

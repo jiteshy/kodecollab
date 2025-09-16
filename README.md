@@ -1,6 +1,6 @@
 # [KodeCollab](https://kodecollab.com) - Real-time Collaborative Text Editor
 
-CollabX is a real-time collaborative text editor that allows multiple users to edit text and code together in real-time. This project is ***vibe coded*** with [Cursor](https://www.cursor.com/) AI Code Editor, exploring how modern AI tools can accelerate & transform development building production-ready apps. 
+KodeCollab is a real-time collaborative text editor that allows multiple users to edit text and code together in real-time. This project is ***vibe coded*** with [Cursor](https://www.cursor.com/) AI Code Editor, exploring how modern AI tools can accelerate & transform development building production-ready apps. 
 
 ## ⭐️ Demo
 

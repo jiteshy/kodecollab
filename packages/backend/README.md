@@ -1,6 +1,6 @@
-# CollabX Backend
+# KodeCollab Backend
 
-This is the backend package for the CollabX real-time collaborative editor.
+This is the backend package for the KodeCollab real-time collaborative editor.
 
 ## Local Development
 
@@ -41,4 +41,4 @@ The server will be available at http://localhost:3001
 - `pnpm start` - Start the server in production mode
 - `pnpm test` - Run unit tests
 
-See the root README for more information about the CollabX project. 
+See the root README for more information about the KodeCollab project. 

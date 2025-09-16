@@ -6,7 +6,7 @@ export function Footer() {
     <div className="w-full lg:absolute bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 lg:from-transparent lg:via-transparent lg:to-transparent bottom-0 px-4 lg:px-6 pt-1 pb-2">
       <div className="flex justify-between items-center text-xs lg:text-sm text-slate-300">
         <span>
-          © {new Date().getFullYear()} CollabX.
+          © {new Date().getFullYear()} KodeCollab.
         </span>
         
         <div className="lg:flex items-center justify-center hidden">

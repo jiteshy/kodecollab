@@ -16,7 +16,7 @@ export const DEFAULT_LANGUAGE = 'javascript';
 export const DEFAULT_CONTENT = `function greet(name) {
   // This is a collaborative editor
   // Any changes you make are visible to others in real-time
-  return \`Welcome to CollabX, \${name}!\`;
+  return \`Welcome to KodeCollab, \${name}!\`;
 }
 
 // Try editing this code together with your team

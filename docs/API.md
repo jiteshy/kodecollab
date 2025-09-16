@@ -1,4 +1,4 @@
-# CollabX API Documentation
+# KodeCollab API Documentation
 
 ## WebSocket Events
 

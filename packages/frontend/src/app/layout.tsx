@@ -15,8 +15,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://kodecollab.com'),
   title: {
-    default: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
-    template: '%s | CollabX'
+    default: 'KodeCollab - Free Real-time Collaborative Code Editor | No Sign-up Required',
+    template: '%s | KodeCollab'
   },
   description: 'Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with instant sessions, syntax highlighting for 20+ languages, and live cursor tracking. No sign-up required - start your collaborative coding session instantly.',
   keywords: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     'no signup',
     'instant coding sessions'
   ],
-  authors: [{ name: 'CollabX Team' }],
-  creator: 'CollabX',
-  publisher: 'CollabX',
+  authors: [{ name: 'KodeCollab Team' }],
+  creator: 'KodeCollab',
+  publisher: 'KodeCollab',
   formatDetection: {
     email: false,
     telephone: false,
@@ -47,16 +47,16 @@ export const metadata: Metadata = {
     canonical: 'https://kodecollab.com',
   },
   openGraph: {
-    title: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
+    title: 'KodeCollab - Free Real-time Collaborative Code Editor | No Sign-up Required',
     description: 'Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with no sign-up required.',
     url: 'https://kodecollab.com',
-    siteName: 'CollabX',
+    siteName: 'KodeCollab',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CollabX - Real-time Collaborative Code Editor',
+        alt: 'KodeCollab - Real-time Collaborative Code Editor',
       },
     ],
     locale: 'en_US',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CollabX - Free Real-time Collaborative Code Editor',
+    title: 'KodeCollab - Free Real-time Collaborative Code Editor',
     description: 'Professional online collaborative code editor for real-time pair programming. Free collaborative coding platform with no sign-up required.',
     images: ['/og-image.png'],
     creator: '@collabx',

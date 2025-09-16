@@ -1,7 +1,7 @@
 {
   "name": "@collabx/backend",
   "version": "0.0.1",
-  "description": "Backend service for CollabX",
+  "description": "Backend service for KodeCollab",
   "author": "Jitesh Yadav",
   "private": true,
   "license": "UNLICENSED",

@@ -1,6 +1,6 @@
-# CollabX Shared
+# KodeCollab Shared
 
-This is the shared package for the CollabX real-time collaborative editor, containing common types, interfaces, and utilities used across the frontend and backend.
+This is the shared package for the KodeCollab real-time collaborative editor, containing common types, interfaces, and utilities used across the frontend and backend.
 
 ## Local Development
 
@@ -38,4 +38,4 @@ pnpm --filter @collabx/shared build
 - `pnpm build` - Build the package
 - `pnpm test` - Run tests
 
-See the root README for more information about the CollabX project. 
+See the root README for more information about the KodeCollab project. 

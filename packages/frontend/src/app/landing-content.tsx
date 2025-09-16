@@ -119,7 +119,7 @@ export function LandingContent() {
                   </div>
                   <div className="flex">
                     <span className="text-zinc-500 w-8 text-right mr-4">4</span>
-                    <span className="ml-4"><span className="text-purple-400">return</span> <span className="text-green-300">`Welcome to CollabX, ${'{'}{'{'}name{'}'}{'}'}`</span><span className="text-yellow-300">;</span></span>
+                    <span className="ml-4"><span className="text-purple-400">return</span> <span className="text-green-300">`Welcome to KodeCollab, ${'{'}{'{'}name{'}'}{'}'}`</span><span className="text-yellow-300">;</span></span>
                   </div>
                   <div className="flex">
                     <span className="text-zinc-500 w-8 text-right mr-4">5</span>
@@ -152,7 +152,7 @@ export function LandingContent() {
       <div className="w-full lg:absolute bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 lg:from-transparent lg:via-transparent lg:to-transparent bottom-0 px-4 lg:px-6 pt-1 pb-2">
         <div className="flex justify-between items-center text-xs lg:text-sm text-slate-300">
           <span>
-            © {new Date().getFullYear()} CollabX - Real-time Collaborative Code Editor
+            © {new Date().getFullYear()} KodeCollab - Real-time Collaborative Code Editor
           </span>
           
           <div className="lg:flex items-center justify-center hidden">
@@ -170,7 +170,7 @@ export function LandingContent() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            "name": "CollabX",
+            "name": "KodeCollab",
             "applicationCategory": "DeveloperApplication",
             "description": "Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with instant sessions, syntax highlighting for 20+ languages, and live cursor tracking. No sign-up required.",
             "url": "https://kodecollab.com",
@@ -192,7 +192,7 @@ export function LandingContent() {
             "keywords": "online collaborative editor, collaborative code editor, pair programming, real-time coding, online code editor, collaborative programming, free code editor, team coding, remote programming",
             "author": {
               "@type": "Organization",
-              "name": "CollabX Team"
+              "name": "KodeCollab Team"
             }
           })
         }}
