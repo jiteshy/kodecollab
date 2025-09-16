@@ -47,9 +47,6 @@ export default async function Home() {
     // Real users get redirect to a new session after brief engagement tracking
     const sessionId = ValidationService.generateValidSessionId(12);
 
-    // Add a small delay to improve engagement metrics and allow page load tracking
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
     redirect(`/${sessionId}`);
   }
   
