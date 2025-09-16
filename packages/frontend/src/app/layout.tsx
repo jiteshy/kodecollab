@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     address: false,
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://collabx.app',
   },
   openGraph: {
     title: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
@@ -85,10 +85,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    // Replace with your actual Google Search Console verification code
-    // google: 'your-google-site-verification-code-here',
   },
   category: 'Technology',
 };
