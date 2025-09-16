@@ -31,54 +31,52 @@ export function LandingContent() {
                 <div className="text-center md:text-left lg:pl-2 lg:pt-5">
                   <h1 className="text-3xl text-white mb-3 lg:mb-4">
                     <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-400">
-                      No-Nonsense
+                      Online Collaborative
                     </span>{' '}
                     <span className="text-zinc-300">
-                      Text <br />
-                      Collaboration
+                      Code <br />
+                      Editor
                     </span>
                   </h1>
                   <p className="text-zinc-400 text-base lg:text-lg leading-relaxed">
-                    Edit code, notes or any text together in real-time.
+                    Professional online collaborative editor for real-time code editing, pair programming, and team collaboration.
                   </p>
                   <p className="text-zinc-400 text-base lg:text-lg leading-relaxed">
-                    <span className="text-zinc-200 font-bold">NO sign-up</span>, just share the link and start{' '}
-                    <br />
-                    collaborating.
+                    <span className="text-zinc-200 font-bold">NO sign-up required</span> - start your collaborative coding session instantly.
                   </p>
                 </div>
 
                 {/* Demo Session Card */}
                 <div className="bg-zinc-100 w-full h-[220px] overflow-auto scrollbar-hide lg:h-auto rounded-lg p-3 lg:p-4 shadow-sm border border-zinc-200 lg:mb-6 dark:bg-zinc-800 dark:border-zinc-700">
                   <h2 className="font-semibold mb-2 text-slate-900 text-base lg:text-lg dark:text-zinc-200">
-                    How It Works
+                    Online Collaborative Code Editor Features
                   </h2>
                   <div className="space-y-3 text-sm text-slate-700 dark:text-zinc-300">
                     <div className="flex items-start space-x-2">
                       <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
-                      <span>Visit collabx.app to instantly create a new collaboration session</span>
+                      <span>Instant collaborative coding sessions - no registration needed</span>
                     </div>
                     <div className="flex items-start space-x-2">
                       <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
-                      <span>Share the unique session URL with your team members</span>
+                      <span>Real-time pair programming with live cursor tracking</span>
                     </div>
                     <div className="flex items-start space-x-2">
                       <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
-                      <span>Start editing together in real-time with syntax highlighting</span>
+                      <span>Professional code editor with syntax highlighting for 20+ languages</span>
                     </div>
                     <div className="flex items-start space-x-2">
                       <Circle className="h-2 w-2 mt-2 text-orange-500 fill-current" />
-                      <span>Support for 20+ programming languages and plain text</span>
+                      <span>Free online collaborative editor for remote development teams</span>
                     </div>
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-700">
                     <h3 className="font-medium mb-2 text-slate-900 dark:text-zinc-200">Features</h3>
                     <div className="flex flex-wrap gap-2 text-xs">
-                      <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded dark:bg-orange-900 dark:text-orange-200">Real-time sync</span>
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200">No registration</span>
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded dark:bg-green-900 dark:text-green-200">Multi-language</span>
-                      <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded dark:bg-purple-900 dark:text-purple-200">Team collaboration</span>
+                      <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded dark:bg-orange-900 dark:text-orange-200">Online editor</span>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-200">Collaborative coding</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded dark:bg-green-900 dark:text-green-200">Pair programming</span>
+                      <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded dark:bg-purple-900 dark:text-purple-200">Real-time editing</span>
                     </div>
                   </div>
                 </div>
@@ -174,7 +172,7 @@ export function LandingContent() {
             "@type": "SoftwareApplication",
             "name": "CollabX",
             "applicationCategory": "DeveloperApplication",
-            "description": "Real-time collaborative code editor that enables seamless pair programming, code sharing, and team collaboration. Features include real-time editing, syntax highlighting, and instant synchronization.",
+            "description": "Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with instant sessions, syntax highlighting for 20+ languages, and live cursor tracking. No sign-up required.",
             "url": "https://collabx.app",
             "operatingSystem": "Any",
             "permissions": "No registration required",
@@ -184,14 +182,14 @@ export function LandingContent() {
               "priceCurrency": "USD"
             },
             "featureList": [
-              "Real-time collaborative editing",
-              "Syntax highlighting for 20+ languages",
-              "No sign-up required",
-              "Instant session sharing",
-              "Multi-user support",
-              "Cross-platform compatibility"
+              "Online collaborative code editor",
+              "Real-time pair programming",
+              "Professional syntax highlighting for 20+ languages",
+              "Instant collaborative coding sessions",
+              "Live cursor tracking and user presence",
+              "Free online editor with no registration"
             ],
-            "keywords": "collaborative editor, online code editor, real-time collaboration, pair programming, code sharing, team coding",
+            "keywords": "online collaborative editor, collaborative code editor, pair programming, real-time coding, online code editor, collaborative programming, free code editor, team coding, remote programming",
             "author": {
               "@type": "Organization",
               "name": "CollabX Team"

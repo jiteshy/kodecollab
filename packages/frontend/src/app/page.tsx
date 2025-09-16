@@ -44,8 +44,12 @@ export default async function Home() {
   const isHeadless = userAgent.toLowerCase().includes('headless');
   
   if (!isBot && !isHeadless) {
-    // Real users get instant redirect to a new session
+    // Real users get redirect to a new session after brief engagement tracking
     const sessionId = ValidationService.generateValidSessionId(12);
+
+    // Add a small delay to improve engagement metrics and allow page load tracking
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
     redirect(`/${sessionId}`);
   }
   

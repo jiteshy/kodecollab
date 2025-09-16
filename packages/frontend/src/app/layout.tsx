@@ -18,22 +18,22 @@ export const metadata: Metadata = {
     default: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
     template: '%s | CollabX'
   },
-  description: 'CollabX is a free real-time collaborative code editor that enables instant pair programming and code sharing. No sign-up required - just visit and start collaborating with your team instantly. Features syntax highlighting for 20+ languages.',
+  description: 'Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with instant sessions, syntax highlighting for 20+ languages, and live cursor tracking. No sign-up required - start your collaborative coding session instantly.',
   keywords: [
-    'collaborative editor',
+    'online collaborative editor',
+    'collaborative code editor',
     'online code editor',
-    'code editor',
     'real-time collaboration',
     'pair programming',
-    'code sharing',
-    'online code editor',
+    'collaborative coding',
+    'free code editor',
     'team coding',
-    'remote collaboration',
+    'remote programming',
     'web development',
     'programming tools',
-    'free code editor',
+    'collaborative programming',
     'no signup',
-    'instant collaboration'
+    'instant coding sessions'
   ],
   authors: [{ name: 'CollabX Team' }],
   creator: 'CollabX',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'CollabX - Free Real-time Collaborative Code Editor | No Sign-up Required',
-    description: 'Free real-time collaborative code editor for instant pair programming. No sign-up required - just visit and start collaborating with your team instantly.',
+    description: 'Professional online collaborative code editor for real-time pair programming and team development. Free collaborative coding platform with no sign-up required.',
     url: 'https://collabx.app',
     siteName: 'CollabX',
     images: [
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'CollabX - Free Real-time Collaborative Code Editor',
-    description: 'Free real-time collaborative code editor for instant pair programming. No sign-up required - just visit and start collaborating.',
+    description: 'Professional online collaborative code editor for real-time pair programming. Free collaborative coding platform with no sign-up required.',
     images: ['/og-image.png'],
     creator: '@collabx',
   },
