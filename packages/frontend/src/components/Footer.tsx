@@ -55,7 +55,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"
           >
-            Built with Cursor
+            Vibe Coded
           </a>
           <span className="text-zinc-500">|</span>
           <a
