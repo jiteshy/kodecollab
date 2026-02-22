@@ -183,14 +183,18 @@ export class EditorGateway implements OnGatewayConnection, OnGatewayDisconnect {
     } catch (error) {
       console.error('Error handling join:', error);
       client.emit(MessageType.ERROR, {
-        type: error.message === 'Session is full' ? 'SESSION_FULL' : 'JOIN_ERROR',
+        type: error.message === 'Session is full'
+          ? 'SESSION_FULL'
+          : error.message === 'Username already taken'
+            ? 'DUPLICATE_USERNAME'
+            : 'JOIN_ERROR',
         message: error.message,
       });
     }
   }
 
   /**
-   * Updates the user's last activity timestamp to prevent inactivity cleanup
+   * Updates the user's last activity timestamp and resets the 4-hour session TTL.
    * @param client - The WebSocket client connection
    */
   private async updateUserActivity(client: Socket): Promise<void> {

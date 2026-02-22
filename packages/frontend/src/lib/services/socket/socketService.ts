@@ -440,8 +440,8 @@ export class SocketService {
       !payload.user ||
       !payload.user.id ||
       !payload.position ||
-      !payload.position.top ||
-      !payload.position.left
+      typeof payload.position.top !== 'number' ||
+      typeof payload.position.left !== 'number'
     ) {
       console.warn('Invalid cursor move payload:', payload);
       return;
