@@ -104,6 +104,12 @@ export class ValidationService {
             message: 'Content must be a string',
           };
         }
+        if ((payload as { content: string }).content.length > 512000) {
+          return {
+            type: 'INVALID_PAYLOAD',
+            message: 'Content exceeds maximum allowed size of 500KB',
+          };
+        }
         return null;
 
       case MessageType.LANGUAGE_CHANGE:

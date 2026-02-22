@@ -108,6 +108,21 @@ describe('ValidationService', () => {
       expect(result).toBeNull();
     });
 
+    it('should return null for content change payload at exactly the size limit', () => {
+      const validPayload = { content: 'a'.repeat(512000) };
+      const result = ValidationService.validateEventPayload(MessageType.CONTENT_CHANGE, validPayload);
+      expect(result).toBeNull();
+    });
+
+    it('should return error for content change payload exceeding 500KB', () => {
+      const oversizedPayload = { content: 'a'.repeat(512001) };
+      const result = ValidationService.validateEventPayload(MessageType.CONTENT_CHANGE, oversizedPayload);
+      expect(result).toEqual({
+        type: 'INVALID_PAYLOAD',
+        message: 'Content exceeds maximum allowed size of 500KB',
+      });
+    });
+
     it('should validate language change payload correctly', () => {
       const validPayload = { language: 'javascript' };
       const result = ValidationService.validateEventPayload(MessageType.LANGUAGE_CHANGE, validPayload);
