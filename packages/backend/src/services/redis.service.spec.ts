@@ -82,8 +82,7 @@ describe('RedisService', () => {
       expect(mockRedis.set).toHaveBeenCalledWith(
         'session:test-session',
         expect.any(String),
-        'EX',
-        86400, // 24 hours in seconds
+        'KEEPTTL',
       );
     });
   });

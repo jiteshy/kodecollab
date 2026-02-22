@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { RedisService } from './redis.service';
 import { Session, User } from '@collabx/shared';
 import {
@@ -10,12 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class SessionService implements OnModuleInit {
+export class SessionService {
   private readonly MAX_USERS_PER_SESSION: number;
   private readonly SESSION_TTL: number;
   private readonly EMPTY_SESSION_TTL: number;
-  private readonly INACTIVITY_TIMEOUT: number;
-  private readonly CLEANUP_INTERVAL: number;
   private readonly logger = new Logger(SessionService.name);
 
   constructor(
@@ -25,20 +23,6 @@ export class SessionService implements OnModuleInit {
     this.MAX_USERS_PER_SESSION = this.configService.get<number>('MAX_USERS_PER_SESSION', 5);
     this.SESSION_TTL = this.configService.get<number>('SESSION_TTL', 14400); // 4 hours in seconds
     this.EMPTY_SESSION_TTL = this.configService.get<number>('EMPTY_SESSION_TTL', 3600); // 1 hour in seconds
-    this.INACTIVITY_TIMEOUT = this.configService.get<number>('INACTIVITY_TIMEOUT', 900); // 15 minutes in seconds
-    this.CLEANUP_INTERVAL = this.configService.get<number>('SESSION_CLEANUP_INTERVAL', 7200000); // 2 hours in ms
-  }
-
-  onModuleInit() {
-    // Schedule session cleanup to run periodically
-    setInterval(() => {
-      this.logger.log('Running scheduled inactive session cleanup');
-      this.cleanupInactiveSessions().catch(err => {
-        this.logger.error(`Error during session cleanup: ${err.message}`, err.stack);
-      });
-    }, this.CLEANUP_INTERVAL);
-    
-    this.logger.log(`Session cleanup scheduled to run every ${this.CLEANUP_INTERVAL/60000} minutes`);
   }
 
   async getOrCreateSession(sessionId: string): Promise<Session> {
@@ -105,14 +89,14 @@ export class SessionService implements OnModuleInit {
         session.users.delete(userId);
         session.lastActive = Date.now();
 
+        await this.redisService.setSession(sessionId, session);
+
         if (session.users.size === 0) {
           await this.redisService.setSessionTTL(
             sessionId,
             this.EMPTY_SESSION_TTL,
           );
         }
-
-        await this.redisService.setSession(sessionId, session);
       }
     }
   }
@@ -163,43 +147,4 @@ export class SessionService implements OnModuleInit {
     }
   }
 
-  async cleanupInactiveSessions(): Promise<void> {
-    const sessions = await this.redisService.getAllSessions();
-    const now = Date.now();
-    let sessionsRemoved = 0;
-    let usersRemoved = 0;
-
-    for (const session of sessions) {
-      const timeSinceLastActive = now - session.lastActive;
-      
-      // Clean up inactive users from active sessions
-      if (session.users.size > 0) {
-        for (const [userId, user] of session.users.entries()) {
-          const userInactivityTime = now - (user.lastActive || session.lastActive);
-          if (userInactivityTime >= this.INACTIVITY_TIMEOUT * 1000) {
-            session.users.delete(userId);
-            usersRemoved++;
-            this.logger.debug(`Removed inactive user ${user.username} from session ${session.id}`);
-          }
-        }
-        
-        // Update session if we've removed users
-        if (usersRemoved > 0) {
-          session.lastActive = now;
-          await this.redisService.setSession(session.id, session);
-        }
-      }
-      
-      // Delete entirely inactive sessions
-      if (timeSinceLastActive >= this.INACTIVITY_TIMEOUT * 1000 || session.users.size === 0) {
-        await this.redisService.deleteSession(session.id);
-        sessionsRemoved++;
-        this.logger.debug(`Removed inactive session ${session.id}`);
-      }
-    }
-    
-    if (sessionsRemoved > 0 || usersRemoved > 0) {
-      this.logger.log(`Cleanup completed: Removed ${sessionsRemoved} inactive sessions and ${usersRemoved} disconnected users`);
-    }
-  }
 }

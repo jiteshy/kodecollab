@@ -6,7 +6,6 @@ import { Session } from '@collabx/shared';
 export class RedisService {
   private readonly redis: Redis;
   private readonly SESSION_PREFIX = 'session:';
-  private readonly SESSION_TTL = 24 * 60 * 60; // 24 hours
   private readonly logger = new Logger(RedisService.name);
 
   constructor() {
@@ -87,8 +86,7 @@ export class RedisService {
     await this.redis.set(
       `${this.SESSION_PREFIX}${sessionId}`,
       JSON.stringify(sessionData),
-      'EX',
-      this.SESSION_TTL,
+      'KEEPTTL',
     );
   }
 
