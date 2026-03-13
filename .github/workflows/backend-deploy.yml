@@ -11,6 +11,7 @@
           # Exclude changes within .ebextensions from triggering a build-only deploy
           # if you want to deploy config changes separately/manually sometimes
           # - '!packages/backend/.ebextensions/**'
+      workflow_dispatch:
 
     jobs:
       deploy:
