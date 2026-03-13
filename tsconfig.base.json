@@ -23,7 +23,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@collabx/shared": ["packages/shared/src"]
+      "@kodecollab/shared": ["packages/shared/src"]
     }
   }
 } 

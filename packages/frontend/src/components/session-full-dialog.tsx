@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/lib/stores/userStore';
 import { useEditorStore } from '@/lib/stores/editorStore';
-import { ValidationService } from '@collabx/shared';
+import { ValidationService } from '@kodecollab/shared';
 
 interface SessionFullDialogProps {
   isOpen: boolean;

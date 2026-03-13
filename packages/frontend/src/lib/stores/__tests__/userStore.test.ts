@@ -1,5 +1,5 @@
 import { useUserStore } from '../userStore';
-import { User } from '@collabx/shared';
+import { User } from '@kodecollab/shared';
 
 describe('userStore', () => {
   beforeEach(() => {

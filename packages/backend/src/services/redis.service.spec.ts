@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RedisService } from './redis.service';
 import { Redis } from 'ioredis';
-import { Session } from '@collabx/shared';
+import { Session } from '@kodecollab/shared';
 
 const mockRedis = {
   get: jest.fn(),

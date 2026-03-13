@@ -1,5 +1,5 @@
 import { SocketService } from '../socketService';
-import { MessageType, User } from '@collabx/shared';
+import { MessageType, User } from '@kodecollab/shared';
 import { Manager, Socket } from 'socket.io-client';
 
 jest.mock('socket.io-client', () => ({

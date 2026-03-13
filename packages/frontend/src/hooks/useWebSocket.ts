@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import { SocketService } from '@/lib/services/socket';
 import { useEditorStore } from '@/lib/stores/editorStore';
 import { useUserStore } from '@/lib/stores/userStore';
-import { MessageType, UserCursor, UserSelection, UserTypingStatus, ValidationService } from '@collabx/shared';
+import { MessageType, UserCursor, UserSelection, UserTypingStatus, ValidationService } from '@kodecollab/shared';
 import { SocketPayloads } from '@/lib/services/socket/types';
 
 export const useWebSocket = (sessionId: string, username: string) => {

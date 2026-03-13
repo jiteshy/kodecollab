@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ValidationService } from '@collabx/shared';
+import { ValidationService } from '@kodecollab/shared';
 
 @Module({
   providers: [ValidationService],

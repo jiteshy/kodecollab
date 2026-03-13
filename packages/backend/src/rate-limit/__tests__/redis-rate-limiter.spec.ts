@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Socket } from 'socket.io';
-import { MessageType } from '@collabx/shared';
+import { MessageType } from '@kodecollab/shared';
 import { ConfigService } from '@nestjs/config';
 import { RedisRateLimiter } from '../redis-rate-limiter';
 import { RedisService } from '../../services/redis.service';

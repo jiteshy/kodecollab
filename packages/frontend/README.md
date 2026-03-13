@@ -24,7 +24,7 @@ cp .env.example .env
 3. Start the development server:
 ```bash
 # From the root directory:
-pnpm --filter @collabx/frontend dev
+pnpm --filter @kodecollab/frontend dev
 
 # Or directly from this directory:
 pnpm dev

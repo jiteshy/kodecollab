@@ -1,5 +1,5 @@
 import { Manager } from 'socket.io-client';
-import { MessageType, User, UserTypingStatus } from '@collabx/shared';
+import { MessageType, User, UserTypingStatus } from '@kodecollab/shared';
 import type {
   SocketPayloads,
   SocketEvents,

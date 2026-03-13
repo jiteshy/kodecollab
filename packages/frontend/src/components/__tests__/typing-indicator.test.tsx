@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { TypingIndicator } from '../typing-indicator';
-import { UserTypingStatus, User } from '@collabx/shared';
+import { UserTypingStatus, User } from '@kodecollab/shared';
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({

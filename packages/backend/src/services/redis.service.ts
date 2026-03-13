@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { Session } from '@collabx/shared';
+import { Session } from '@kodecollab/shared';
 
 @Injectable()
 export class RedisService {

@@ -9,9 +9,9 @@ KodeCollab is a real-time collaborative code editor. Multiple users share a sess
 ## Monorepo Structure
 
 pnpm workspaces with three packages:
-- `packages/frontend` — Next.js 15 app (`@collabx/frontend`)
-- `packages/backend` — NestJS server (`@collabx/backend`)
-- `packages/shared` — TypeScript types, validation, utilities (`@collabx/shared`)
+- `packages/frontend` — Next.js 15 app (`@kodecollab/frontend`)
+- `packages/backend` — NestJS server (`@kodecollab/backend`)
+- `packages/shared` — TypeScript types, validation, utilities (`@kodecollab/shared`)
 
 The shared package must be built before frontend or backend. The `predev` and `prebuild` scripts handle this automatically.
 
@@ -28,20 +28,20 @@ pnpm dev
 pnpm test
 
 # Run tests for a single package
-pnpm --filter @collabx/frontend test
-pnpm --filter @collabx/backend test
-pnpm --filter @collabx/shared test
+pnpm --filter @kodecollab/frontend test
+pnpm --filter @kodecollab/backend test
+pnpm --filter @kodecollab/shared test
 
 # Run a single test file
-pnpm --filter @collabx/backend test -- --testPathPattern=editor.gateway
-pnpm --filter @collabx/frontend test -- --testPathPattern=ComponentName
+pnpm --filter @kodecollab/backend test -- --testPathPattern=editor.gateway
+pnpm --filter @kodecollab/frontend test -- --testPathPattern=ComponentName
 
 # Test watch / coverage
-pnpm --filter @collabx/backend test:watch
-pnpm --filter @collabx/backend test:cov
-pnpm --filter @collabx/backend test:e2e
-pnpm --filter @collabx/frontend test:watch
-pnpm --filter @collabx/frontend test:coverage
+pnpm --filter @kodecollab/backend test:watch
+pnpm --filter @kodecollab/backend test:cov
+pnpm --filter @kodecollab/backend test:e2e
+pnpm --filter @kodecollab/frontend test:watch
+pnpm --filter @kodecollab/frontend test:coverage
 
 # Lint and format
 pnpm lint
@@ -49,15 +49,15 @@ pnpm format
 
 # Production builds
 pnpm build
-pnpm --filter @collabx/frontend build
-pnpm --filter @collabx/backend build:ncc   # NCC-bundled build for AWS deployment
+pnpm --filter @kodecollab/frontend build
+pnpm --filter @kodecollab/backend build:ncc   # NCC-bundled build for AWS deployment
 
 # Build shared package manually (needed if editing shared types)
-pnpm --filter @collabx/shared build
+pnpm --filter @kodecollab/shared build
 
 # Backend debug / production start
-pnpm --filter @collabx/backend start:debug   # debug mode with --watch
-pnpm --filter @collabx/backend start:prod    # runs compiled dist/main.js
+pnpm --filter @kodecollab/backend start:debug   # debug mode with --watch
+pnpm --filter @kodecollab/backend start:prod    # runs compiled dist/main.js
 ```
 
 ## Environment Setup
@@ -124,8 +124,8 @@ Every `@SubscribeMessage` handler follows the same four-step flow: validate payl
 
 ## Key Conventions
 
-- **Package naming:** packages reference each other as `"@collabx/shared": "workspace:*"`
-- **Path alias:** `@collabx/shared` is mapped in tsconfig for both frontend and backend
+- **Package naming:** packages reference each other as `"@kodecollab/shared": "workspace:*"`
+- **Path alias:** `@kodecollab/shared` is mapped in tsconfig for both frontend and backend
 - **TypeScript:** strict mode enabled; `no-explicit-any` is off in ESLint
 - **Formatting:** single quotes, trailing commas everywhere (Prettier)
 - **Session capacity:** when a session is full, users get read-only access rather than being rejected

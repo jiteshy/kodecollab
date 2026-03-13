@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SessionCard } from '../session-card';
-import { User } from '@collabx/shared';
+import { User } from '@kodecollab/shared';
 import { expect } from '@jest/globals';
 
 // Mock window.location

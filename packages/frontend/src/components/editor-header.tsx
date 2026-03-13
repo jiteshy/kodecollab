@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { SUPPORTED_LANGUAGES } from '@collabx/shared';
-import { User } from '@collabx/shared';
+import { SUPPORTED_LANGUAGES } from '@kodecollab/shared';
+import { User } from '@kodecollab/shared';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users } from 'lucide-react';
 

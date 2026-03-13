@@ -1,4 +1,4 @@
-import { User, UserCursor, UserSelection, MessageType, UserTypingStatus } from '@collabx/shared';
+import { User, UserCursor, UserSelection, MessageType, UserTypingStatus } from '@kodecollab/shared';
 
 export interface SocketPayloads {
   [MessageType.JOIN]: { user: User };

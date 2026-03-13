@@ -1,7 +1,7 @@
 import { Copy, Share2, Users, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User } from '@collabx/shared';
+import { User } from '@kodecollab/shared';
 import { useEffect, useState } from 'react';
 
 interface SessionCardProps {

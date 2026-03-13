@@ -6,7 +6,7 @@ import type { editor as MonacoEditorType } from 'monaco-editor';
 import type { EditorProps } from '@monaco-editor/react';
 import { useEditorStore } from '@/lib/stores';
 import { useUserStore } from '@/lib/stores/userStore';
-import { DEFAULT_CONTENT, DEFAULT_LANGUAGE, MessageType } from '@collabx/shared';
+import { DEFAULT_CONTENT, DEFAULT_LANGUAGE, MessageType } from '@kodecollab/shared';
 import { useTheme } from 'next-themes';
 import { EditorShimmer } from './editor-shimmer';
 import { TypingIndicator } from './typing-indicator';

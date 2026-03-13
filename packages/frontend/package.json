@@ -1,10 +1,10 @@
 {
-  "name": "@collabx/frontend",
+  "name": "@kodecollab/frontend",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "prebuild": "pnpm --filter @collabx/shared build",
+    "prebuild": "pnpm --filter @kodecollab/shared build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@collabx/shared": "workspace:*",
+    "@kodecollab/shared": "workspace:*",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-dropdown-menu": "^2.1.6",

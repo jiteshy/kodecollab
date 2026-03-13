@@ -1,4 +1,4 @@
-import { MessageType, User } from '@collabx/shared';
+import { MessageType, User } from '@kodecollab/shared';
 
 export interface WebSocketMessage {
   type: MessageType;

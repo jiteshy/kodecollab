@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Socket } from 'socket.io';
-import { MessageType } from '@collabx/shared';
+import { MessageType } from '@kodecollab/shared';
 import { RedisService } from '../services/redis.service';
 import { ConfigService } from '@nestjs/config';
 

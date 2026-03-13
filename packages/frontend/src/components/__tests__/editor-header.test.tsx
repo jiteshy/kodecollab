@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { EditorHeader } from '../editor-header';
-import { User } from '@collabx/shared';
+import { User } from '@kodecollab/shared';
 import { expect } from '@jest/globals';
 
 describe('EditorHeader', () => {

@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SessionService } from './session.service';
 import { Redis } from 'ioredis';
 import { RedisService } from './redis.service';
-import { Session } from '@collabx/shared';
-import { DEFAULT_CONTENT } from '@collabx/shared';
+import { Session } from '@kodecollab/shared';
+import { DEFAULT_CONTENT } from '@kodecollab/shared';
 import { ConfigService } from '@nestjs/config';
 
 jest.mock('ioredis', () => {

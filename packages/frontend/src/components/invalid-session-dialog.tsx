@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { ValidationService } from '@collabx/shared';
+import { ValidationService } from '@kodecollab/shared';
 
 interface InvalidSessionDialogProps {
   isOpen: boolean;

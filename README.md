@@ -44,7 +44,7 @@ After the initial lift from Replit, the app is entirely built with Cursor in my 
 ## 📁 Project Structure
 
 ```
-collabx/
+kodecollab/
 ├── packages/
 │   ├── frontend/     # Next.js frontend application
 │   ├── backend/      # NestJS backend server
@@ -64,8 +64,8 @@ collabx/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/jiteshy/collabx.git
-cd collabx
+git clone https://github.com/jiteshy/kodecollab.git
+cd kodecollab
 ```
 
 2. Install dependencies:
@@ -99,13 +99,13 @@ Access the application at:
 pnpm test
 
 # Run frontend tests
-pnpm --filter @collabx/frontend test
+pnpm --filter @kodecollab/frontend test
 
 # Run backend tests
-pnpm --filter @collabx/backend test
+pnpm --filter @kodecollab/backend test
 
 # Run shared tests
-pnpm --filter @collabx/shared test
+pnpm --filter @kodecollab/shared test
 ```
 
 ### Building for Production
@@ -115,8 +115,8 @@ pnpm --filter @collabx/shared test
 pnpm build
 
 # Build specific packages
-pnpm --filter @collabx/frontend build
-pnpm --filter @collabx/backend build:ncc
+pnpm --filter @kodecollab/frontend build
+pnpm --filter @kodecollab/backend build:ncc
 ```
 
 ## 🔒 Security Best Practices

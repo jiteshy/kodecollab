@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { MonacoEditor } from '../monaco-editor';
-import { MessageType, DEFAULT_CONTENT, DEFAULT_LANGUAGE, UserTypingStatus } from '@collabx/shared';
+import { MessageType, DEFAULT_CONTENT, DEFAULT_LANGUAGE, UserTypingStatus } from '@kodecollab/shared';
 
 // Mock the store
 const mockStore = {

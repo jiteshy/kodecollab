@@ -33,10 +33,10 @@
             run: pnpm install --frozen-lockfile
 
           - name: Build shared package
-            run: pnpm --filter @collabx/shared build
+            run: pnpm --filter @kodecollab/shared build
 
           - name: Build backend package
-            run: pnpm --filter @collabx/backend build:ncc
+            run: pnpm --filter @kodecollab/backend build:ncc
 
           - name: Generate deployment package
             run: |

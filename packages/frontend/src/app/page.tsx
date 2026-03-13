@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { ValidationService } from '@collabx/shared';
+import { ValidationService } from '@kodecollab/shared';
 import { LandingContent } from './landing-content';
 
 // List of known search engine bots and crawlers

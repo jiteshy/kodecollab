@@ -59,7 +59,7 @@ export function Footer() {
           </a>
           <span className="text-zinc-500">|</span>
           <a
-            href="https://github.com/jiteshy/collabx/issues"
+            href="https://github.com/jiteshy/kodecollab/issues"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition-colors"

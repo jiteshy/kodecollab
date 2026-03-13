@@ -19,7 +19,7 @@ pnpm install
 2. Build the package:
 ```bash
 # From the root directory:
-pnpm --filter @collabx/shared build
+pnpm --filter @kodecollab/shared build
 
 # Or directly from this directory:
 pnpm build
@@ -30,7 +30,7 @@ pnpm build
 The shared package is automatically linked to the other packages in the monorepo. When you make changes to the shared package, you need to rebuild it for the changes to be reflected in the other packages:
 
 ```bash
-pnpm --filter @collabx/shared build
+pnpm --filter @kodecollab/shared build
 ```
 
 ### Available Scripts

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { UserTypingStatus } from '@collabx/shared';
+import { UserTypingStatus } from '@kodecollab/shared';
 
 interface TypingIndicatorProps {
   typingUsers: Map<string, UserTypingStatus>;

@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { RedisService } from './redis.service';
-import { Session, User } from '@collabx/shared';
+import { Session, User } from '@kodecollab/shared';
 import {
   DEFAULT_CONTENT,
   DEFAULT_LANGUAGE,
   getRandomColor,
-} from '@collabx/shared';
+} from '@kodecollab/shared';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 

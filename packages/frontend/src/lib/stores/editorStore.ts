@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { DEFAULT_CONTENT, DEFAULT_LANGUAGE } from '@collabx/shared';
+import { DEFAULT_CONTENT, DEFAULT_LANGUAGE } from '@kodecollab/shared';
 
 interface EditorState {
   content: string;

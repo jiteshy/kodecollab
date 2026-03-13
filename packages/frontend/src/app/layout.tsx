@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: 'KodeCollab - Free Real-time Collaborative Code Editor',
     description: 'Professional online collaborative code editor for real-time pair programming. Free collaborative coding platform with no sign-up required.',
     images: ['/og-image.png'],
-    creator: '@collabx',
+    creator: '@kodecollab',
   },
   viewport: {
     width: 'device-width',

@@ -3,7 +3,7 @@ import { EditorGateway } from './editor.gateway';
 import { Server, Socket } from 'socket.io';
 import { SessionService } from '../services/session.service';
 import { ConfigService } from '@nestjs/config';
-import { MessageType, User } from '@collabx/shared';
+import { MessageType, User } from '@kodecollab/shared';
 import { RedisRateLimiter } from '../rate-limit/redis-rate-limiter';
 
 jest.mock('socket.io', () => {

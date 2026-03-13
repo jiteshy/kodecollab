@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User, UserCursor, UserSelection, UserTypingStatus } from '@collabx/shared';
+import { User, UserCursor, UserSelection, UserTypingStatus } from '@kodecollab/shared';
 
 interface UserState {
   users: User[];
