@@ -13,4 +13,4 @@ metadata:
 spec:
   type: website
   lifecycle: production
-  owner: jiteshy
+  owner: user:default/jiteshy
