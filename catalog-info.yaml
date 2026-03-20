@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kodecollab
+  description: Online collaborative text editor
+  tags:
+    - nextjs
+    - nestjs
+    - socket.io
+    - typescript
+  annotations:
+    github.com/project-slug: jiteshy/kodecollab
+spec:
+  type: website
+  lifecycle: production
+  owner: jiteshy
